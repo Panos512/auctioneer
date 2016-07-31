@@ -1,0 +1,33 @@
+<header></header>
+<pending-message></pending-message>
+
+    <div class="well well-sm">
+        <strong>Category Title</strong>
+        <div class="btn-group">
+            <a href="#/auctions" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#/auctions" id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+    </div>
+    <div id="products" class="row list-group">
+        <div ng-repeat="auction in auctions" class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="{{auction.mainImage}}" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading"><b>{{auction.itemId}}</b>. {{auction.name}}</h4>
+                    <p class="group inner list-group-item-text">{{auction.description}}</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                Highest bid: ${{auction.currently}}</p>
+                            <p class="lead">
+                                Buyout price: ${{auction.buy_price}}</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <a class="btn btn-success" href="#/auctions">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
