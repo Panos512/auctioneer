@@ -24,7 +24,31 @@ public class Users {
     private String role; // TODO: Validation for possible choices.
     private String gender;
     private Boolean verified;
+    private double buyerRating;
+    private double sellerRating;
 
+    @Basic
+    @Column(name = "BuyerRating")
+    public double getBuyerRating() {
+        return buyerRating;
+    }
+
+    public void setBuyerRating(double buyerRating) {
+        this.buyerRating = buyerRating;
+    }
+
+    @Basic
+    @Column(name = "SellerRating")
+    public double getSellerRating() {
+        return sellerRating;
+    }
+
+    public void setSellerRating(double sellerRating) {
+        this.sellerRating = sellerRating;
+    }
+
+    @Basic
+    @Column(name = "Gender")
     public String getGender() {
         return gender;
     }
@@ -33,6 +57,8 @@ public class Users {
         this.gender = gender;
     }
 
+    @Basic
+    @Column(name = "Verified")
     public Boolean getVerified() {
         return verified;
     }

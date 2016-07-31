@@ -31,6 +31,8 @@ public class UserMapper {
         user.setRole("user");
         user.setGender(userSignUpDto.getGender());
         user.setVerified(false);
+        user.setBuyerRating(0.0);
+        user.setSellerRating(0.0);
         return user;
     }
 
@@ -55,6 +57,8 @@ public class UserMapper {
         userDto.setRole(user.getRole());
         userDto.setGender(user.getGender());
         userDto.setVerified(user.getVerified());
+        userDto.setBuyerRating(user.getBuyerRating());
+        userDto.setSellerRating(user.getSellerRating());
 
         return userDto;
     }

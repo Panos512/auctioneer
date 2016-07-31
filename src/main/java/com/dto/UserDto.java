@@ -34,6 +34,25 @@ public class UserDto {
 
     private Boolean verified;
 
+    private double buyerRating;
+    private double sellerRating;
+
+    public double getBuyerRating() {
+        return buyerRating;
+    }
+
+    public void setBuyerRating(double buyerRating) {
+        this.buyerRating = buyerRating;
+    }
+
+    public double getSellerRating() {
+        return sellerRating;
+    }
+
+    public void setSellerRating(double sellerRating) {
+        this.sellerRating = sellerRating;
+    }
+
     public Boolean getVerified() {
         return verified;
     }

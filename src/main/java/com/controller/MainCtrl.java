@@ -35,24 +35,8 @@ public class MainCtrl {
 
 
     private UserDto convertToDTO(Users user) {
-        UserDto dto = new UserDto();
 
-        dto.setUserId(user.getUserId());
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setFirst_name(user.getFirstName());
-        dto.setLast_name(user.getLastName());
-        dto.setMail(user.getEmail());
-        dto.setPhone_number(user.getPhone());
-        dto.setLatitude(user.getLatitude());
-        dto.setLongtitude(user.getLongitude());
-        dto.setAfm(user.getAfm());
-        dto.setAddress(user.getAddress());
-        dto.setRole(user.getRole());
-        dto.setGender(user.getGender());
-        dto.setVerified(user.getVerified());
-
-        return dto;
+        return UserMapper.registerUsersToUser(user);
     }
 
     private List<UserDto> convertToDTOs(List<Users> users) {
