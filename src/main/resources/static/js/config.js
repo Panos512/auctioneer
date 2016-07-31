@@ -22,6 +22,11 @@ app.config(function($routeProvider, $httpProvider){
             controller: 'AdminController',
             controllerAs: 'controller'
         })
+        .when('/auctions',{
+            templateUrl: "/views/auctions_list.html",
+            controller: 'AuctionsController',
+            controllerAs: 'controller'
+        })
         .otherwise(
             { redirectTo: '/'}
         );
