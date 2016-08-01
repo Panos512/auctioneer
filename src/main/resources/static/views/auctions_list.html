@@ -12,7 +12,7 @@
     <div id="products" class="row list-group">
         <div ng-repeat="auction in auctions" class="item  col-xs-4 col-lg-4">
             <div class="thumbnail">
-                <img class="group list-group-image" src="{{auction.mainImage}}" alt="" />
+                <img class="group list-group-image" ng-src="/images/{{$index + 1}}_1.png" alt="" />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading"><b>{{auction.itemId}}</b>. {{auction.name}}</h4>
                     <p class="group inner list-group-item-text">{{auction.description}}</p>

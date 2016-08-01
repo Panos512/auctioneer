@@ -1,18 +1,16 @@
 package com.controller;
 
 
-import com.dao.UserRepository;
-import com.dto.UserDto;
-import com.dto.VerifyRequestDto;
-import com.dto.UserLoginRequestDto;
-import com.dto.UserLogInResponseDto;
-import com.dto.UserSignUpRequestDto;
-import com.dto.UserSignUpResponseDto;
+import com.dao.*;
+import com.dto.*;
 
 
+import com.entity.Category;
+import com.entity.Item;
 import com.entity.Users;
 import com.exceptions.BadRequestException;
 import com.mappers.UserMapper;
+import com.mappers.ItemMapper;
 import com.user.UserAuthorizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,17 +30,30 @@ public class MainCtrl {
     private UserRepository userRepository;
 
     @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
     private UserAuthorizer userAuthorizer;
 
 
-    private UserDto convertToDTO(Users user) {
+    private UserDto convertToUsersDTO(Users user) {
 
         return UserMapper.registerUsersToUser(user);
     }
 
-    private List<UserDto> convertToDTOs(List<Users> users) {
+    private List<UserDto> convertToUsersDTOs(List<Users> users) {
         return users.stream()
-                .map(this::convertToDTO)
+                .map(this::convertToUsersDTO)
+                .collect(toList());
+    }
+
+    private ItemDto convertToItemDTO(Item item) {
+        return ItemMapper.registerItemToItem(item);
+    }
+
+    private List<ItemDto> convertToItemDTOs(List<Item> items) {
+        return items.stream()
+                .map(this::convertToItemDTO)
                 .collect(toList());
     }
 
@@ -50,7 +61,7 @@ public class MainCtrl {
     public List<UserDto> get_users_list() throws Exception {
         // TODO: Need to authenticate with token if the user is admin!!!!!
         List<Users> users = userRepository.findAll();
-        return convertToDTOs(users);
+        return convertToUsersDTOs(users);
     }
 
     @RequestMapping(path="/approve_user", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -66,6 +77,15 @@ public class MainCtrl {
         Users user = userRepository.findUserByUserId(userId);
 
         return UserMapper.registerUsersToUser(user);
+    }
+
+    @RequestMapping(path="/auctions_list", method = RequestMethod.GET, produces = "application/json")
+    public List<ItemDto> get_user() throws Exception {
+        List<Item> items = itemRepository.findAll();
+
+        // TODO: We need to add the list of categories associated with every item somehow somewhere. Maybe even in a previeous step (fetch it automaticaly using a `find` function)
+
+        return convertToItemDTOs(items);
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
