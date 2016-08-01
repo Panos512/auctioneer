@@ -27,7 +27,16 @@ public class ItemDto {
     private String description;
     private int sellerId;
     private List<CategoryDto> categories;
+    private boolean auctionStarted;
 
+
+    public boolean isAuctionStarted() {
+        return auctionStarted;
+    }
+
+    public void setAuctionStarted(boolean auctionStarted) {
+        this.auctionStarted = auctionStarted;
+    }
 
     public int getItemId() {
         return itemId;
