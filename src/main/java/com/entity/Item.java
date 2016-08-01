@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by dimitris on 7/31/16.
+ * Created by panos on 8/1/16.
  */
 @Entity
 public class Item {
@@ -25,6 +25,7 @@ public class Item {
     private Date startDate;
     private Date endDate;
     private String description;
+    private int sellerId;
 
     @Id
     @Column(name = "ItemId")
@@ -156,6 +157,16 @@ public class Item {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "SellerId")
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,6 +177,7 @@ public class Item {
         if (itemId != item.itemId) return false;
         if (Double.compare(item.latitude, latitude) != 0) return false;
         if (Double.compare(item.longitude, longitude) != 0) return false;
+        if (sellerId != item.sellerId) return false;
         if (name != null ? !name.equals(item.name) : item.name != null) return false;
         if (currently != null ? !currently.equals(item.currently) : item.currently != null) return false;
         if (buyPrice != null ? !buyPrice.equals(item.buyPrice) : item.buyPrice != null) return false;
@@ -199,6 +211,7 @@ public class Item {
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + sellerId;
         return result;
     }
 }

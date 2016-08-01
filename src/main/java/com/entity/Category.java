@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by dimitris on 7/31/16.
+ * Created by panos on 8/1/16.
  */
 @Entity
 public class Category {

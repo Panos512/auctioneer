@@ -1,15 +1,18 @@
 package com.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by dimitris on 7/31/16.
+ * Created by panos on 8/1/16.
  */
 @Entity
 public class ItemCategory {
     private int itemCategoryId;
+    private int itemId;
+    private int categoryId;
 
     @Id
     @Column(name = "ItemCategoryId")
@@ -21,6 +24,26 @@ public class ItemCategory {
         this.itemCategoryId = itemCategoryId;
     }
 
+    @Basic
+    @Column(name = "ItemId")
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    @Basic
+    @Column(name = "CategoryId")
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,12 +52,17 @@ public class ItemCategory {
         ItemCategory that = (ItemCategory) o;
 
         if (itemCategoryId != that.itemCategoryId) return false;
+        if (itemId != that.itemId) return false;
+        if (categoryId != that.categoryId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return itemCategoryId;
+        int result = itemCategoryId;
+        result = 31 * result + itemId;
+        result = 31 * result + categoryId;
+        return result;
     }
 }
