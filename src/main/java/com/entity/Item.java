@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by panos on 8/1/16.
+ * Created by panos on 8/2/16.
  */
 @Entity
 public class Item {

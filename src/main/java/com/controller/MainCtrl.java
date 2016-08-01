@@ -1,11 +1,11 @@
 package com.controller;
 
 
-import com.dao.*;
+import com.dao.ItemRepository;
+import com.dao.UserRepository;
 import com.dto.*;
 
 
-import com.entity.Category;
 import com.entity.Item;
 import com.entity.Users;
 import com.exceptions.BadRequestException;
@@ -80,9 +80,10 @@ public class MainCtrl {
     }
 
     @RequestMapping(path="/auctions_list", method = RequestMethod.GET, produces = "application/json")
-    public List<ItemDto> get_user() throws Exception {
-        List<Item> items = itemRepository.findAll();
-
+    public List<ItemDto> auctions_list() throws Exception {
+        System.out.println("list  items");
+        List<Item> items = itemRepository.findByStartDate(null);
+        System.out.println(items);
         // TODO: We need to add the list of categories associated with every item somehow somewhere. Maybe even in a previeous step (fetch it automaticaly using a `find` function)
 
         return convertToItemDTOs(items);
