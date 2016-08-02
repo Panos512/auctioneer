@@ -27,6 +27,11 @@ app.config(function($routeProvider, $httpProvider){
             controller: 'AuctionsController',
             controllerAs: 'controller'
         })
+        .when('/add_auction',{
+            templateUrl: "/views/add_auction.html",
+            controller: 'AddAuctionController',
+            controllerAs: 'controller'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

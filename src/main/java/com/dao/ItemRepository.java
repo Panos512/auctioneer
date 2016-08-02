@@ -15,6 +15,6 @@ import java.util.List;
 public interface ItemRepository extends CrudRepository<Item, Long> {
     Item findItemByItemId(int itemId);
     List<Item> findAll();
-    List<Item> findByStartDate(Date date);
+    List<Item> findByStartDateIsNotNull();
 }
 

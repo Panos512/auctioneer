@@ -154,7 +154,7 @@ public class MainCtrl {
     @RequestMapping(path="/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {
 
-        List<Item> items = itemRepository.findByStartDate(null);
+        List<Item> items = itemRepository.findByStartDateIsNotNull();
         // TODO: We need to add the list of categories associated with every item somehow somewhere. Maybe even in a previeous step (fetch it automaticaly using a `find` function)
 
         return convertToItemDTOs(items);

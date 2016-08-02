@@ -1,0 +1,49 @@
+<header></header>
+<pending-message></pending-message>
+
+<div class="alert alert-danger" ng-show="error">
+    There was a problem logging in. Please try again.
+</div>
+<form role="form">
+    <div class="form-group">
+        <label for="name">Username:</label> <input type="text"
+                                                       class="form-control" id="name" name="name" ng-model="credentials.name"/>
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label> <input type="text"
+                                                             class="form-control" id="description" name="description" ng-model="credentials.description"/>
+    </div>
+    <div class="form-group">
+        <span class="input-group-addon">$</span>
+        <label for="firstBid">Starting Bid:</label> <input type="number"
+                                                   class="form-control" id="firstBid" name="firstBid" ng-model="credentials.firstBid"/>
+    </div>
+    <div class="form-group">
+        <span class="input-group-addon">$</span>
+        <label for="buyPrice">Buyout Price:</label> <input type="number"
+                                                   class="form-control" id="buyPrice" name="buyPrice" ng-model="credentials.buyPrice"/>
+    </div>
+    <div class="form-group">
+        <label for="country">Country:</label> <input type="text"
+                                                   class="form-control" id="country" name="country" ng-model="credentials.country"/>
+    </div>
+    <div class="form-group">
+        <label for="latitude">Latitude:</label> <input type="text"
+                                                       class="form-control" id="latitude" name="latitude" ng-model="credentials.latitude"/>
+    </div>
+    <div class="form-group">
+        <label for="longtitude">Longtitude:</label> <input type="text"
+                                                           class="form-control" id="longtitude" name="longtitude" ng-model="credentials.longtitude"/>
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start Date:</label> <input type="text" id="startDate" data-format="DD-MM-YYYY HH:mm" data-template="DD / MM / YYYY     HH : mm" name="startDate" value="21-12-2012 20:30">
+        <script>
+            $(function(){
+                $('#datetime24').combodate();
+            });
+        </script>
+    </div>
+
+
+
+</form>
