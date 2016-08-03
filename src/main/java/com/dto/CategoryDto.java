@@ -5,16 +5,16 @@ package com.dto;
  */
 public class CategoryDto {
 
-    private int categoryId;
+//    private int categoryId;
     private String categoryName;
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
+//    public int getCategoryId() {
+//        return categoryId;
+//    }
+//
+//    public void setCategoryId(int categoryId) {
+//        this.categoryId = categoryId;
+//    }
 
     public String getCategoryName() {
         return categoryName;

@@ -20,7 +20,7 @@ public class UserSignUpRequestDto {
     private String phone_number;
 
     private Double latitude;
-    private Double longtitude;
+    private Double longitude;
 
     private String afm;
 
@@ -112,12 +112,12 @@ public class UserSignUpRequestDto {
         this.latitude = latitude;
     }
 
-    public Double getLongtitude() {
-        return longtitude;
+    public Double getlongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(Double longtitude) {
-        this.longtitude = longtitude;
+    public void setlongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getGender() {
@@ -139,7 +139,7 @@ public class UserSignUpRequestDto {
                 ", mail='" + mail + '\'' +
                 ", phone_number='" + phone_number + '\'' +
                 ", latitude=" + latitude +
-                ", longtitude=" + longtitude +
+                ", longitude=" + longitude +
                 ", afm='" + afm + '\'' +
                 ", address='" + address + '\'' +
                 ", gender='" + gender + '\'' +

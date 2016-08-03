@@ -25,7 +25,7 @@ public class UserMapper {
         user.setPhone(userSignUpDto.getPhone_number());
         user.setAfm(userSignUpDto.getAfm());
         user.setLatitude(userSignUpDto.getLatitude());
-        user.setLongitude(userSignUpDto.getLongtitude());
+        user.setLongitude(userSignUpDto.getlongitude());
         user.setAddress(userSignUpDto.getAddress());
         user.setRole("user");
         user.setGender(userSignUpDto.getGender());
@@ -51,7 +51,7 @@ public class UserMapper {
         userDto.setPhone_number(user.getPhone());
         userDto.setAfm(user.getAfm());
         userDto.setLatitude(user.getLatitude());
-        userDto.setLongtitude(user.getLongitude());
+        userDto.setlongitude(user.getLongitude());
         userDto.setAddress(user.getAddress());
         userDto.setRole(user.getRole());
         userDto.setGender(user.getGender());

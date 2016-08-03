@@ -20,7 +20,7 @@ public class UserDto {
     private String phone_number;
 
     private Double latitude;
-    private Double longtitude;
+    private Double longitude;
 
     private String afm;
 
@@ -134,12 +134,12 @@ public class UserDto {
         this.latitude = latitude;
     }
 
-    public Double getLongtitude() {
-        return longtitude;
+    public Double getlongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(Double longtitude) {
-        this.longtitude = longtitude;
+    public void setlongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getAfm() {

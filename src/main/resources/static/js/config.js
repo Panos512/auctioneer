@@ -2,7 +2,7 @@
 
 app.config(function($routeProvider, $httpProvider){
     $routeProvider
-        .when('/',{
+        .when('/' ,{
             templateUrl: '/views/home.html',
             controller: 'HomeController',
             controllerAs: 'controller'
@@ -25,6 +25,11 @@ app.config(function($routeProvider, $httpProvider){
         .when('/auctions',{
             templateUrl: "/views/auctions_list.html",
             controller: 'AuctionsController',
+            controllerAs: 'controller'
+        })
+        .when('/add_auction',{
+            templateUrl: "/views/add_auction.html",
+            controller: 'AddAuctionController',
             controllerAs: 'controller'
         })
         .otherwise(

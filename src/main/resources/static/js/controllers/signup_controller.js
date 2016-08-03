@@ -12,7 +12,7 @@ app.controller('SignUpController', ['$scope', '$location','RequestServices' , 's
         mail: '',
         phone_number: '',
         latitude: '',
-        longtitude: '',
+        longitude: '',
         afm: '',
         address: '',
         role: '',
@@ -72,8 +72,8 @@ app.controller('SignUpController', ['$scope', '$location','RequestServices' , 's
         //     $scope.latitude_missing_error = 'set';
         //     miss_error = true;
         // }
-        // if ($scope.credentials.longtitude === '') {
-        //     $scope.longtitude_missing_error = 'set';
+        // if ($scope.credentials.longitude === '') {
+        //     $scope.longitude_missing_error = 'set';
         //     miss_error = true;
         // }
         // if ($scope.credentials.afm === '') {
@@ -116,7 +116,7 @@ app.controller('SignUpController', ['$scope', '$location','RequestServices' , 's
             mail: $scope.credentials.mail,
             phone_number: $scope.credentials.phone_number,
             latitude: $scope.credentials.latitude,
-            longtitude: $scope.credentials.longtitude,
+            longitude: $scope.credentials.longitude,
             afm: $scope.credentials.afm,
             address: $scope.credentials.address,
             role: 'user',

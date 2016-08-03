@@ -1,23 +1,17 @@
 package com.dto;
 
-import com.dto.CategoryDto;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-
 /**
- * Created by panos on 8/1/16.
+ * Created by dimitris on 7/24/16.
  */
-public class ItemDto {
+public class ItemAddRequestDto {
 
-    private int itemId;
     private String name;
-    private BigDecimal currently;
     private BigDecimal buyPrice;
     private BigDecimal firstBid;
-    private Integer numberOfBids;
     private double latitude;
     private double longitude;
     private String country;
@@ -28,29 +22,12 @@ public class ItemDto {
     private int sellerId;
     private List<CategoryDto> categories;
 
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BigDecimal getCurrently() {
-        return currently;
-    }
-
-    public void setCurrently(BigDecimal currently) {
-        this.currently = currently;
     }
 
     public BigDecimal getBuyPrice() {
@@ -67,14 +44,6 @@ public class ItemDto {
 
     public void setFirstBid(BigDecimal firstBid) {
         this.firstBid = firstBid;
-    }
-
-    public Integer getNumberOfBids() {
-        return numberOfBids;
-    }
-
-    public void setNumberOfBids(Integer numberOfBids) {
-        this.numberOfBids = numberOfBids;
     }
 
     public double getLatitude() {
@@ -147,5 +116,23 @@ public class ItemDto {
 
     public void setCategories(List<CategoryDto> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemAddRequestDto{" +
+                "name='" + name + '\'' +
+                ", buyPrice=" + buyPrice +
+                ", firstBid=" + firstBid +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", country='" + country + '\'' +
+                ", createdDate=" + createdDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", sellerId=" + sellerId +
+                ", categories=" + categories +
+                '}';
     }
 }

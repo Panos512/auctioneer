@@ -44,6 +44,15 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
+    }
+
+    services.add_auction = function(request){
+        return $http.post('/add_auction', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
     };
 
 
@@ -82,4 +91,4 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
     };
 
     return services;
-}])
+}]);
