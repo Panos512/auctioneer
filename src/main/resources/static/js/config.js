@@ -2,7 +2,7 @@
 
 app.config(function($routeProvider, $httpProvider){
     $routeProvider
-        .when('/',{
+        .when('/' ,{
             templateUrl: '/views/home.html',
             controller: 'HomeController',
             controllerAs: 'controller'

@@ -87,9 +87,9 @@ INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, 
   (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 37.434003, 25.274956, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
 
 INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,  `Number_Of_Bids`,  `Latitude`,  `Longitude`,  `Country`,  `CreatedDate`,  `StartDate`,  `EndDate`,  `Description`,  `SellerId`) VALUES
-                    (1, "Playstation 4", 150, 200, 100, 3, 42, 6, "Greece", STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('15-08-2016', '%d-%m-%Y'), "Playstation 4 in great condition, bought on 2016. Comes with 4 games and 2 controllers. Also available 3rd remote." , 1);
+                    (1, "Playstation 4", 150, 200, 100, 3, 42.1, 6.1, "Greece", STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('15-08-2016', '%d-%m-%Y'), "Playstation 4 in great condition, bought on 2016. Comes with 4 games and 2 controllers. Also available 3rd remote." , 1);
 INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,  `Number_Of_Bids`,  `Latitude`,  `Longitude`,  `Country`,  `CreatedDate`,  `StartDate`,  `EndDate`,  `Description`,  `SellerId`)  VALUES
-                    (2, "MacBook Pro 13inch late 2015", 850, 950, 800, 1, 42, 6.2, "Greece",  STR_TO_DATE('1-08-2016', '%d-%m-%Y'), null, STR_TO_DATE('16-09-2016', '%d-%m-%Y'), "MacBook Pro in exceland condition. 4gb of ram 128gb ssd and i5 processor. Comes with charger and 2 thunderbolt to dvi adaptors." , 1);
+                    (2, "MacBook Pro 13inch late 2015", 850, 950, 800, 1, 42.1, 6.2, "Greece",  STR_TO_DATE('1-08-2016', '%d-%m-%Y'), null, STR_TO_DATE('16-09-2016', '%d-%m-%Y'), "MacBook Pro in exceland condition. 4gb of ram 128gb ssd and i5 processor. Comes with charger and 2 thunderbolt to dvi adaptors." , 1);
 
 INSERT INTO `Category` VALUES (1, "Video Games");
 INSERT INTO `Category` VALUES (2, "Laptops");

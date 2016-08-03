@@ -1,15 +1,30 @@
 'use strict';
 
-app.controller('AddAuctionController', ['$scope', 'sharedProperties', function($scope, sharedProperties) {
+app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', function($scope, $location, $cookies, RequestServices) {
+    $scope.buttonDisabled = false;
     $scope.credentials = {
-        name:'',
-        buyPrice: '',
-        firstBid: '',
-        latitude: '',
-        longitude: '',
-        country: '',
-        startDate: '',
-        description: '',
+        name:'A new auction',
+        description: 'This is a description for the first auction and it needs to be somhow big. So, I will continue typing for some more characters in order to make thi big enough. I think thats enough.. Or maybe not. Ok Bye!',
+        firstBid: 10,
+        latitude: 12,
+        longitude: 6,
+        country: 'Greece',
+        startDate: new Date(),
+        endDate: new Date(),
+        buyPrice: 100,
         sellerId: ''
+    };
+
+    $scope.addAuction = function() {
+        $scope.buttonDisabled=  true;
+        $scope.credentials.createdDate = new Date();
+        var cookie = $cookies.getObject('auctioneer_user');
+        $scope.credentials.sellerId = cookie.id;
+        console.log($scope.credentials);
+
+        RequestServices.add_auction($scope.credentials).then(function (response){
+            console.log(response);
+            $location.path("/");
+        })
     };
 }]);

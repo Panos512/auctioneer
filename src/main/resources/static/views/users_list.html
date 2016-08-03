@@ -63,10 +63,10 @@
                 </a>
             </td>
             <td>
-                <a href="" ng-click="sortType = 'user.longtitude'; sortReverse = !sortReverse">
-                    Longtitude
-                    <span ng-show="sortType == 'user.longtitude' && !sortReverse" class="fa fa-caret-down"></span>
-                    <span ng-show="sortType == 'user.longtitude' && sortReverse" class="fa fa-caret-up"></span>
+                <a href="" ng-click="sortType = 'user.longitude'; sortReverse = !sortReverse">
+                    longitude
+                    <span ng-show="sortType == 'user.longitude' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'user.longitude' && sortReverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
             <td>
@@ -105,7 +105,7 @@
             <td>{{user.mail}}</td>
             <td>{{user.phone_number}}</td>
             <td>{{user.latitude}}</td>
-            <td>{{user.longtitude}}</td>
+            <td>{{user.longitude}}</td>
             <td>{{user.afm}}</td>
             <td>{{user.address}}</td>
             <td>{{user.role}}</td>
@@ -133,7 +133,7 @@
         <div class="col-md-3 col-xs-6 small">
             <label>Address</label> {{current_user.address}}<br>
             <label>Latitude</label> {{current_user.latitude}}<br>
-            <label>Longtitude</label> {{current_user.longtitude}}<br>
+            <label>longitude</label> {{current_user.longitude}}<br>
         </div>
         <div class="col-md-3 col-xs-6 small">
             <label>Email</label> {{current_user.mail}}<br>

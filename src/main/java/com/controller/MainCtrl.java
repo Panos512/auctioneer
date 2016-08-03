@@ -103,7 +103,7 @@ public class MainCtrl {
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public UserSignUpResponseDto register(@RequestBody UserSignUpRequestDto userSignUpRequestDto) throws Exception {
-
+        System.out.println("w");
         Users user = userRepository.findUserByUsernameAndPassword(userSignUpRequestDto.getUsername(), userSignUpRequestDto.getPassword());
 
         if (user != null) {
@@ -135,11 +135,12 @@ public class MainCtrl {
     @RequestMapping(path = "/add_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
-
+        System.out.println(itemAddRequestDto);
         // Create Item
 //        Item item = UserMapper.registerRequestToUser(userSignUpRequestDto);
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
 //        userRepository.save(new_user);
+        System.out.println(new_item);
         itemRepository.save(new_item);
         System.out.println(new_item);
         // Create dummy response

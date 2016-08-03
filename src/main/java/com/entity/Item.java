@@ -104,6 +104,7 @@ public class Item {
     }
 
     public void setLongitude(double longitude) {
+        System.out.println(longitude);
         this.longitude = longitude;
     }
 
