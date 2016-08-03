@@ -14,6 +14,10 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         buyPrice: 100,
         sellerId: ''
     };
+    $scope.files = [];
+    $scope.upload=function(){
+        console.log($scope.files);
+    };
 
     $scope.addAuction = function() {
         $scope.buttonDisabled=  true;
