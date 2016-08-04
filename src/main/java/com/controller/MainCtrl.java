@@ -13,23 +13,17 @@ import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
 import com.user.UserAuthorizer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.List;
@@ -116,7 +110,7 @@ public class MainCtrl {
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public UserSignUpResponseDto register(@RequestBody UserSignUpRequestDto userSignUpRequestDto) throws Exception {
-        System.out.println("w");
+
         Users user = userRepository.findUserByUsernameAndPassword(userSignUpRequestDto.getUsername(), userSignUpRequestDto.getPassword());
 
         if (user != null) {
@@ -143,13 +137,13 @@ public class MainCtrl {
     public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
         System.out.println(itemAddRequestDto);
-        // Create Item
-//        Item item = UserMapper.registerRequestToUser(userSignUpRequestDto);
+
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
-//        userRepository.save(new_user);
+
         System.out.println(new_item);
+
         itemRepository.save(new_item);
-        System.out.println(new_item);
+
         // Create dummy response
         long i = 1;
         ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
@@ -176,73 +170,38 @@ public class MainCtrl {
 //        return UserMapper.registerUsersToUser(user);
 //    }
 
-
-//    @RequestMapping(path="/upload_image", method = RequestMethod.POST, consumes = "multipart/*")
-//    public void UploadFile(MultipartFile file) throws Exception {
-//        System.out.println("I AM IN");
-//        System.out.println(file);
-//        Document document = new Document(file.getBytes(), file.getOriginalFilename() );
-//        System.out.println(document);
-////        getArchiveService().save(document);
-////        return document.getMetadata();
-//    } catch (Exception e) {
-//        System.out.println("error");
-//    }
-//    }
-
     @RequestMapping(value = "/upload_image", method = RequestMethod.POST)
-    public void UploadFile(MultipartHttpServletRequest request) throws IOException {
-        System.out.println(request);
+    public UploadFileResponseDto UploadFile(MultipartHttpServletRequest request) throws IOException {
+
+
+
+
         Iterator<String> itr = request.getFileNames();
-        System.out.println("tsa");
-        System.out.println(itr);
         MultipartFile file = request.getFile(itr.next());
-        System.out.println("sout");
-        System.out.println(file);
         String fileName = file.getOriginalFilename();
-        File dir = new File("./src/main/resources/static/images");
-        String absolutePath = dir.getAbsolutePath();
-        System.out.println(absolutePath);
+
+        File dir = new File("./src/main/resources/static/images/user_uploads");
+
         if (dir.isDirectory()) {
+
             File serverFile = new File(dir, fileName);
+
             BufferedOutputStream stream = new BufferedOutputStream(
                     new FileOutputStream(serverFile));
             stream.write(file.getBytes());
             stream.close();
+
+            String absolutePath = serverFile.getAbsolutePath();
+
+            UploadFileResponseDto uploadFileResponseDto = new UploadFileResponseDto();
+            uploadFileResponseDto.setPath(absolutePath);
+
+            return uploadFileResponseDto;
         } else {
-            System.out.println("not");
+            return null;
         }
 
     }
-
-
-
-//    @RequestMapping(value = "/upload_image", method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity<?> uploadFile(MultipartFile uploadfile) {
-//
-//        try {
-//            // Get the filename and build the local file path (be sure that the
-//            // application have write permissions on such directory)
-//            String filename = uploadfile.getOriginalFilename();
-//            String directory = "/var/netgloo_blog/uploads";
-//            String filepath = Paths.get(directory, filename).toString();
-//
-//            // Save the file locally
-//            BufferedOutputStream stream =
-//                    new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-//            stream.write(uploadfile.getBytes());
-//            stream.close();
-//        }
-//        catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    } // method uploadFile
-
-
 
     @ExceptionHandler(Exception.class)
     public void notFound(HttpServletResponse e) throws Exception {

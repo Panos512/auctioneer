@@ -215,4 +215,24 @@ public class Item {
         result = 31 * result + sellerId;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemId=" + itemId +
+                ", name='" + name + '\'' +
+                ", currently=" + currently +
+                ", buyPrice=" + buyPrice +
+                ", firstBid=" + firstBid +
+                ", numberOfBids=" + numberOfBids +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", country='" + country + '\'' +
+                ", createdDate=" + createdDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", sellerId=" + sellerId +
+                '}';
+    }
 }

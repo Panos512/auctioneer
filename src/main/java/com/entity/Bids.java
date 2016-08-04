@@ -29,7 +29,7 @@ public class Bids {
     }
 
     @Basic
-    @Column(name = "UserId")
+    @Column(name = "userId")
     public int getUserId() {
         return userId;
     }

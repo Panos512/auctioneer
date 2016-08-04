@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', 'fileUploadService', function($scope, $location, $cookies, RequestServices, fileUploadService) {
+app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', function($scope, $location, $cookies, RequestServices) {
     $scope.buttonDisabled = false;
     $scope.credentials = {
         name:'A new auction',
@@ -12,7 +12,8 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         startDate: new Date(),
         endDate: new Date(),
         buyPrice: 100,
-        sellerId: ''
+        sellerId: '',
+        photos: []
     };
     $scope.files = [];
     // $scope.upload=function(){
@@ -22,10 +23,22 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     $scope.upload= function(){
         var files = $scope.files;
         console.log(files);
-        fileUploadService.uploadFileToUrl(files);
-        // RequestServices.upload_files(files).then(function (response){
-        //     console.log(response);
-        // });
+
+        var fileCount = files.length;
+
+        var cookie = $cookies.getObject('auctioneer_user');
+        var userId = cookie.id;
+
+        for (var i = 0; i < fileCount; i++) {
+
+            RequestServices.upload_file(files[i])
+                .then(function (response){
+                    console.log(response);
+                    $scope.credentials.photos.push(response.data.path);
+                });
+
+        }
+
     };
 
     $scope.addAuction = function() {

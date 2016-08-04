@@ -44,7 +44,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
-    }
+    };
 
     services.add_auction = function(request){
         return $http.post('/add_auction', request)
@@ -101,21 +101,22 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
-    return services;
-}]);
-
-app.service('fileUploadService', function ($http) {
-    this.uploadFileToUrl = function(file){
+    services.upload_file = function(file){
         var fd = new FormData();
         console.log(file);
         fd.append('file', file._file);
-        $http.post('/upload_image', fd, {
+        var response = $http.post('/upload_image', fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-            .success(function(){
-            })
-            .error(function(){
+            .then(function(response){
+                console.log(response);
+                return response;
             });
-    }
-});
+        return response;
+
+
+    };
+
+    return services;
+}]);
