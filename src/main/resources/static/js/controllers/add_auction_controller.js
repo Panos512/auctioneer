@@ -12,7 +12,33 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         startDate: new Date(),
         endDate: new Date(),
         buyPrice: 100,
-        sellerId: ''
+        sellerId: '',
+        photos: []
+    };
+    $scope.files = [];
+    // $scope.upload=function(){
+    //     console.log($scope.files);
+    // };
+
+    $scope.upload= function(){
+        var files = $scope.files;
+        console.log(files);
+
+        var fileCount = files.length;
+
+        var cookie = $cookies.getObject('auctioneer_user');
+        var userId = cookie.id;
+
+        for (var i = 0; i < fileCount; i++) {
+
+            RequestServices.upload_file(files[i])
+                .then(function (response){
+                    console.log(response);
+                    $scope.credentials.photos.push(response.data.path);
+                });
+
+        }
+
     };
 
     $scope.addAuction = function() {

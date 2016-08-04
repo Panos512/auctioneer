@@ -44,7 +44,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
-    }
+    };
 
     services.add_auction = function(request){
         return $http.post('/add_auction', request)
@@ -53,6 +53,17 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
+    };
+
+    services.upload_files = function(request){
+        console.log(request);
+        request = request[0]._file;
+        console.log(request);
+        return $http.post('/upload_image', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
     };
 
 
@@ -87,6 +98,23 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 console.log(response);
                 return response.data;
             });
+
+    };
+
+    services.upload_file = function(file){
+        var fd = new FormData();
+        console.log(file);
+        fd.append('file', file._file);
+        var response = $http.post('/upload_image', fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+            .then(function(response){
+                console.log(response);
+                return response;
+            });
+        return response;
+
 
     };
 

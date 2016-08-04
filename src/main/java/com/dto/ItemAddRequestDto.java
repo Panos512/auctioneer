@@ -21,6 +21,15 @@ public class ItemAddRequestDto {
     private String description;
     private int sellerId;
     private List<CategoryDto> categories;
+    private List<String> photos;
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
 
     public String getName() {
         return name;
@@ -133,6 +142,7 @@ public class ItemAddRequestDto {
                 ", description='" + description + '\'' +
                 ", sellerId=" + sellerId +
                 ", categories=" + categories +
+                ", photos=" + photos +
                 '}';
     }
 }

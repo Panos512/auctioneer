@@ -46,10 +46,23 @@
             <md-datepicker ng-model="credentials.endDate" md-placeholder="End Date:"></md-datepicker>
         </div>
 
+
+        <input type="file" ng-file-model="files" multiple/>
+        <button type="button" ng-click="upload()">Upload</button>
+        <!--<input type="file" file-model="file"/>-->
+        <!--<button ng-click="upload()">upload me</button>-->
+
+        <p ng-repeat="file in files">
+            {{file.name}}
+        </p>
+        <!--<div>-->
+            <!--<input type="file" id="file1" name="file" multiple-->
+                   <!--file-upload="upload()" />-->
+        <!--</div>-->
+
         <div class="form-group">
             <md-button type="submit" ng-disabled="buttonDisabled">Add Auction</md-button>
         </div>
     </md-content>
-
 
 </form>
