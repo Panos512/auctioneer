@@ -1,18 +1,19 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * Created by panos on 8/2/16.
+ * Created by Panos on 6/8/16.
  */
 @Entity
 public class Item {
+
     private int itemId;
+
     private String name;
     private BigDecimal currently;
     private BigDecimal buyPrice;
@@ -26,8 +27,13 @@ public class Item {
     private Date endDate;
     private String description;
     private int sellerId;
+//    private Collection<Bids> bidsesByItemId;
+//    private Users usersBySellerId;
+//    private Collection<ItemCategory> itemCategoriesByItemId;
+    private List<Photos> photosesByItemId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ItemId")
     public int getItemId() {
         return itemId;
@@ -104,7 +110,6 @@ public class Item {
     }
 
     public void setLongitude(double longitude) {
-        System.out.println(longitude);
         this.longitude = longitude;
     }
 
@@ -168,6 +173,20 @@ public class Item {
         this.sellerId = sellerId;
     }
 
+
+
+
+    @OneToMany(mappedBy = "itemByItemid")
+    public List<Photos> getPhotosesByItemId() {
+        return photosesByItemId;
+    }
+
+    public void setPhotosesByItemId(List<Photos> photosesByItemId) {
+        this.photosesByItemId = photosesByItemId;
+
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -216,6 +235,25 @@ public class Item {
         return result;
     }
 
+//    @OneToMany(mappedBy = "itemByItemId")
+//    public Collection<Bids> getBidsesByItemId() {
+//        return bidsesByItemId;
+//    }
+//
+//    public void setBidsesByItemId(Collection<Bids> bidsesByItemId) {
+//        this.bidsesByItemId = bidsesByItemId;
+//    }
+
+//    @ManyToOne
+//    @JoinColumn(name = "SellerId", referencedColumnName = "UserID", nullable = false)
+//    public Users getUsersBySellerId() {
+//        return usersBySellerId;
+//    }
+//
+//    public void setUsersBySellerId(Users usersBySellerId) {
+//        this.usersBySellerId = usersBySellerId;
+//    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -233,6 +271,19 @@ public class Item {
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
                 ", sellerId=" + sellerId +
+                ", photosesByItemId=" + photosesByItemId +
                 '}';
     }
+
+
+    //    @OneToMany(mappedBy = "itemByItemId")
+//    public Collection<ItemCategory> getItemCategoriesByItemId() {
+//        return itemCategoriesByItemId;
+//    }
+//
+//    public void setItemCategoriesByItemId(Collection<ItemCategory> itemCategoriesByItemId) {
+//        this.itemCategoriesByItemId = itemCategoriesByItemId;
+//    }
+//
+
 }

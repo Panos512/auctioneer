@@ -5,14 +5,13 @@
 package com.dao;
 
 import com.entity.Item;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends CrudRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Integer> {
     Item findItemByItemId(int itemId);
     List<Item> findAll();
     List<Item> findByStartDateIsNotNull();

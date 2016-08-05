@@ -1,17 +1,16 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by panos on 8/1/16.
+ * Created by Panos on 6/8/16.
  */
 @Entity
 public class Category {
     private int categoryId;
     private String categoryName;
+    private Collection<ItemCategory> itemCategoriesByCategoryId;
 
     @Id
     @Column(name = "CategoryId")
@@ -47,10 +46,19 @@ public class Category {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = categoryId;
-        result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = categoryId;
+//        result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
+//        return result;
+//    }
+//
+//    @OneToMany(mappedBy = "categoryByCategoryId")
+//    public Collection<ItemCategory> getItemCategoriesByCategoryId() {
+//        return itemCategoriesByCategoryId;
+//    }
+//
+//    public void setItemCategoriesByCategoryId(Collection<ItemCategory> itemCategoriesByCategoryId) {
+//        this.itemCategoriesByCategoryId = itemCategoriesByCategoryId;
+//    }
 }

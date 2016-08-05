@@ -83,6 +83,18 @@ CREATE TABLE `ItemCategory` (
   FOREIGN KEY (`CategoryId`) REFERENCES `Category` (`CategoryId`)
 );
 
+
+
+CREATE TABLE `Photos` (
+  `PhotoId` int(11) NOT NULL AUTO_INCREMENT,
+  `Itemid` int(11) NOT NULL,
+  `PhotoPath` varchar(255) NOT NULL,
+  PRIMARY KEY (PhotoId),
+  FOREIGN KEY (`ItemId`) REFERENCES `Item` (`ItemId`)
+);
+
+
+
 INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
   (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 37.434003, 25.274956, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
 
@@ -96,3 +108,6 @@ INSERT INTO `Category` VALUES (2, "Laptops");
 
 INSERT INTO  `ItemCategory` VALUES (1, 1, 1);
 INSERT INTO  `ItemCategory` VALUES (2, 2, 2);
+
+INSERT INTO `Photos` VALUES (1, 1, 'images/1_1.png');
+INSERT INTO `Photos` VALUES (2, 2, 'images/2_1.png');

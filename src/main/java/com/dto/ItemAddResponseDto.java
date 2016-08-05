@@ -5,14 +5,21 @@ package com.dto;
  */
 public class ItemAddResponseDto {
 
-    public Long itemId;
+    public int itemId;
 
-    public Long getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemAddResponseDto{" +
+                "itemId=" + itemId +
+                '}';
     }
 }
 

@@ -1,14 +1,11 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by panos on 8/1/16.
+ * Created by Panos on 6/8/16.
  */
 @Entity
 public class Bids {
@@ -17,6 +14,8 @@ public class Bids {
     private int itemId;
     private Date bidDate;
     private BigDecimal offerPrice;
+    private Users usersByUserId;
+    private Item itemByItemId;
 
     @Id
     @Column(name = "BidId")
@@ -29,7 +28,7 @@ public class Bids {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "UserId")
     public int getUserId() {
         return userId;
     }
@@ -93,4 +92,24 @@ public class Bids {
         result = 31 * result + (offerPrice != null ? offerPrice.hashCode() : 0);
         return result;
     }
+
+//    @ManyToOne
+//    @JoinColumn(name = "UserId", referencedColumnName = "UserID", nullable = false)
+//    public Users getUsersByUserId() {
+//        return usersByUserId;
+//    }
+//
+//    public void setUsersByUserId(Users usersByUserId) {
+//        this.usersByUserId = usersByUserId;
+//    }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
+//    public Item getItemByItemId() {
+//        return itemByItemId;
+//    }
+//
+//    public void setItemByItemId(Item itemByItemId) {
+//        this.itemByItemId = itemByItemId;
+//    }
 }

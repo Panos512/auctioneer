@@ -1,12 +1,10 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by panos on 8/1/16.
+ * Created by Panos on 6/8/16.
  */
 @Entity
 public class Users {
@@ -25,7 +23,9 @@ public class Users {
     private String phone;
     private String role;
     private String gender;
-    private boolean verified;
+    private Boolean verified;
+    private Collection<Bids> bidsesByUserId;
+    private Collection<Item> itemsByUserId;
 
     @Id
     @Column(name = "UserID")
@@ -179,11 +179,11 @@ public class Users {
 
     @Basic
     @Column(name = "Verified")
-    public boolean getVerified() {
+    public Boolean getVerified() {
         return verified;
     }
 
-    public void setVerified(boolean verified) {
+    public void setVerified(Boolean verified) {
         this.verified = verified;
     }
 
@@ -239,4 +239,22 @@ public class Users {
         result = 31 * result + (gender != null ? gender.hashCode() : 0);
         return result;
     }
+
+//    @OneToMany(mappedBy = "usersByUserId")
+//    public Collection<Bids> getBidsesByUserId() {
+//        return bidsesByUserId;
+//    }
+//
+//    public void setBidsesByUserId(Collection<Bids> bidsesByUserId) {
+//        this.bidsesByUserId = bidsesByUserId;
+//    }
+//
+//    @OneToMany(mappedBy = "usersBySellerId")
+//    public Collection<Item> getItemsByUserId() {
+//        return itemsByUserId;
+//    }
+//
+//    public void setItemsByUserId(Collection<Item> itemsByUserId) {
+//        this.itemsByUserId = itemsByUserId;
+//    }
 }
