@@ -1,0 +1,33 @@
+<header></header>
+<pending-message></pending-message>
+
+
+<dl class="dl-horizontal">
+    <dt>Name:</dt>
+    <dd>{{credentials.name}}</dd>
+    <dt>Categories:</dt>
+    <dd>{{credentials.categories}}</dd>
+    <dt>Description:</dt>
+    <dd>{{credentials.description}}</dd>
+    <dt>Highest Bid:</dt>
+    <dd>{{credentials.currently}}</dd>
+    <dt>Buyout Price:</dt>
+    <dd>{{credentials.buyPrice}}</dd>
+    <dt>End Date:</dt>
+    <dd>{{credentials.endDate}}
+    <dt>Seller:</dt>
+    <dd><a href="">SellersNameClickable</a></dd>
+
+    <form role="form" ng-submit="PlaceBid">
+        <div class="form-group align-center">
+            <!--<span class="input-group-addon">$</span>-->
+            <input type="number" min="0" step="0.01" value="0" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" name="buyPrice" ng-model="credentials.buyPrice"/>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" ng-disabled="buttonDisabled">Place Bid</button>
+        </div>
+
+    </form>
+
+
+</dl>

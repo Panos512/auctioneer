@@ -1,20 +1,21 @@
 package com.controller;
 
 
+import com.dao.CategoryRepository;
 import com.dao.ItemRepository;
 import com.dao.PhotosRepository;
 import com.dao.UserRepository;
+
 import com.dto.*;
 
 
-import com.entity.Item;
-import com.entity.Photos;
-import com.entity.Users;
+import com.entity.*;
 import com.exceptions.BadRequestException;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
 import com.user.UserAuthorizer;
+import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,11 @@ public class MainCtrl {
     @Autowired
     private UserAuthorizer userAuthorizer;
 
+    //@Autowired
+    //private ItemCategoryRepository itemCategoryRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     private UserDto convertToUsersDTO(Users user) {
 
@@ -186,13 +192,9 @@ public class MainCtrl {
 
     @RequestMapping(path = "/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {
-
         List<Item> items = itemRepository.findByStartDateIsNotNull();
-        // TODO: We need to add the list of categories associated with every item somehow somewhere. Maybe even in a previeous step (fetch it automaticaly using a `find` function)
-        List<ItemDto> response = convertToItemDTOs(items);
-        return response;
+        return convertToItemDTOs(items);
     }
-
 
     @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
     public ItemDto get_auction(@PathVariable int itemId) throws Exception {
@@ -223,7 +225,7 @@ public class MainCtrl {
             stream.close();
 
             String path = "images/user_uploads/" + fileName;
-
+            System.out.println(path);
             UploadFileResponseDto uploadFileResponseDto = new UploadFileResponseDto();
             uploadFileResponseDto.setPath(path);
 

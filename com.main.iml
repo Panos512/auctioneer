@@ -7,7 +7,8 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="noname-a.xml@0" value="247fc02d-8868-47d4-8727-278a4fd205d6" />
-          <factory-entry name="ted" />
+          <factory-entry name="persistenceUnit" value="1c8e1cdf-5beb-4798-8e4b-fb7e931e0c42" />
+          <factory-entry name="ted" value="1c8e1cdf-5beb-4798-8e4b-fb7e931e0c42" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
