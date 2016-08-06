@@ -75,6 +75,8 @@ public class ItemMapper {
         itemDto.setNumberOfBids(item.getNumberOfBids());
         itemDto.setSellerId(item.getSellerId());
         itemDto.setStartDate(item.getStartDate());
+        itemDto.setCategories(item.getCategories());
+
         itemDto.setImages(item.getPhotosesByItemId());
 
         return itemDto;

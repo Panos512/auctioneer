@@ -1,19 +1,21 @@
 package com.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * Created by Panos on 6/8/16.
+ * Created by panos on 8/1/16.
  */
 @Entity
 public class Category {
     private int categoryId;
     private String categoryName;
-    private Collection<ItemCategory> itemCategoriesByCategoryId;
 
     @Id
-    @Column(name = "CategoryId")
+    @Column(name = "CategoryId", nullable = false)
     public int getCategoryId() {
         return categoryId;
     }
@@ -23,7 +25,7 @@ public class Category {
     }
 
     @Basic
-    @Column(name = "CategoryName")
+    @Column(name = "CategoryName", nullable = false, length = 255)
     public String getCategoryName() {
         return categoryName;
     }
@@ -46,19 +48,19 @@ public class Category {
         return true;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int result = categoryId;
-//        result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
-//        return result;
+    @Override
+    public int hashCode() {
+        int result = categoryId;
+        result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
+        return result;
+    }
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "categories")
+//    public List<Item> getItems() {
+//        return items;
 //    }
 //
-//    @OneToMany(mappedBy = "categoryByCategoryId")
-//    public Collection<ItemCategory> getItemCategoriesByCategoryId() {
-//        return itemCategoriesByCategoryId;
-//    }
-//
-//    public void setItemCategoriesByCategoryId(Collection<ItemCategory> itemCategoriesByCategoryId) {
-//        this.itemCategoriesByCategoryId = itemCategoriesByCategoryId;
+//    public void setItems(List<Item> items) {
+//        this.items = items;
 //    }
 }

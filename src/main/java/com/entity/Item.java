@@ -11,9 +11,7 @@ import java.util.List;
  */
 @Entity
 public class Item {
-
     private int itemId;
-
     private String name;
     private BigDecimal currently;
     private BigDecimal buyPrice;
@@ -26,6 +24,7 @@ public class Item {
     private Date startDate;
     private Date endDate;
     private String description;
+    private List<Category> categories;
     private int sellerId;
 //    private Collection<Bids> bidsesByItemId;
 //    private Users usersBySellerId;
@@ -233,6 +232,16 @@ public class Item {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + sellerId;
         return result;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "ItemCategory", catalog = "", schema = "auctioneer", joinColumns = @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false), inverseJoinColumns = @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId", nullable = false))
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
 //    @OneToMany(mappedBy = "itemByItemId")

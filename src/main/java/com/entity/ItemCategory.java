@@ -3,7 +3,7 @@ package com.entity;
 import javax.persistence.*;
 
 /**
- * Created by Panos on 6/8/16.
+ * Created by dimitris on 8/5/16.
  */
 @Entity
 public class ItemCategory {
@@ -59,12 +59,9 @@ public class ItemCategory {
 
     @Override
     public int hashCode() {
-        int result = itemCategoryId;
-        result = 31 * result + itemId;
-        result = 31 * result + categoryId;
-        return result;
+        return itemCategoryId;
     }
-//
+
 //    @ManyToOne
 //    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
 //    public Item getItemByItemId() {
@@ -74,7 +71,7 @@ public class ItemCategory {
 //    public void setItemByItemId(Item itemByItemId) {
 //        this.itemByItemId = itemByItemId;
 //    }
-//
+
 //    @ManyToOne
 //    @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId", nullable = false)
 //    public Category getCategoryByCategoryId() {
@@ -84,4 +81,11 @@ public class ItemCategory {
 //    public void setCategoryByCategoryId(Category categoryByCategoryId) {
 //        this.categoryByCategoryId = categoryByCategoryId;
 //    }
+
+
+
+
+
+
+
 }
