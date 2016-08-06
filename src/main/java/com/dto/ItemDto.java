@@ -3,7 +3,6 @@ package com.dto;
 import com.entity.Category;
 import com.dto.CategoryDto;
 import com.entity.Photos;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mappers.PhotoMapper;
 
 import javax.persistence.OneToMany;
