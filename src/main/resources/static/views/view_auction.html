@@ -6,7 +6,7 @@
     <dt>Name:</dt>
     <dd>{{credentials.name}}</dd>
     <dt>Categories:</dt>
-    <dd>{{credentials.categories}}</dd>
+    <dd ng-repeat="category in credentials.categories">{{category.categoryName}}</dd>
     <dt>Description:</dt>
     <dd>{{credentials.description}}</dd>
     <dt>Highest Bid:</dt>
