@@ -1,8 +1,15 @@
 package com.mappers;
 
 import com.dto.ItemAddRequestDto;
+import com.dto.ItemAddResponseDto;
 import com.dto.ItemDto;
+import com.dto.PhotoDto;
 import com.entity.Item;
+import com.entity.Photos;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by panos on 8/1/16.
@@ -36,6 +43,15 @@ public class ItemMapper {
         return item;
     }
 
+    public static ItemAddResponseDto registerItemToItemResponseDto(Item item) {
+
+        ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
+
+        itemAddResponseDto.setItemId(item.getItemId());
+
+        return itemAddResponseDto;
+    }
+
 
     public static ItemDto registerItemToItem(Item item) {
 
@@ -59,6 +75,7 @@ public class ItemMapper {
         itemDto.setNumberOfBids(item.getNumberOfBids());
         itemDto.setSellerId(item.getSellerId());
         itemDto.setStartDate(item.getStartDate());
+        itemDto.setImages(item.getPhotosesByItemId());
 
         return itemDto;
     }

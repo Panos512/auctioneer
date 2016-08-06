@@ -2,13 +2,16 @@ package com.controller;
 
 
 import com.dao.ItemRepository;
+import com.dao.PhotosRepository;
 import com.dao.UserRepository;
 import com.dto.*;
 
 
 import com.entity.Item;
+import com.entity.Photos;
 import com.entity.Users;
 import com.exceptions.BadRequestException;
+import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
 import com.user.UserAuthorizer;
@@ -20,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.List;
@@ -38,6 +38,9 @@ public class MainCtrl {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private PhotosRepository photosRepository;
 
     @Autowired
     private UserAuthorizer userAuthorizer;
@@ -61,6 +64,16 @@ public class MainCtrl {
     private List<ItemDto> convertToItemDTOs(List<Item> items) {
         return items.stream()
                 .map(this::convertToItemDTO)
+                .collect(toList());
+    }
+
+    private PhotoDto convertToPhotoDTO(Photos photo) {
+        return PhotoMapper.registerPhotosToPhotoDto(photo);
+    }
+
+    private List<PhotoDto> convertToPhotoDTOs(List<Photos> photos) {
+        return photos.stream()
+                .map(this::convertToPhotoDTO)
                 .collect(toList());
     }
 
@@ -132,7 +145,6 @@ public class MainCtrl {
 
     // ITEMS
     // TODO: MOVE TO NEW FILE
-
     @RequestMapping(path = "/add_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
@@ -140,14 +152,33 @@ public class MainCtrl {
 
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
 
-        System.out.println(new_item);
 
         itemRepository.save(new_item);
+        itemRepository.flush();
+
+        List<String> photos = itemAddRequestDto.getPhotos();
+        Integer itemId = new_item.getItemId();
+
+
+        photos.forEach(photo -> {
+            Photos photosEntity = new Photos();
+
+            photosEntity.setItemByItemid(new_item);
+            System.out.println(itemId);
+            photosEntity.setPhotoPath(photo);
+
+            System.out.println(photo);
+
+            photosRepository.save(photosEntity);
+            photosRepository.flush();
+            System.out.println(photosEntity);
+        });
+
+
 
         // Create dummy response
-        long i = 1;
         ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
-        itemAddResponseDto.setItemId(i);
+        itemAddResponseDto.setItemId(new_item.getItemId());
 
         return itemAddResponseDto; // TODO: Return something meaningful.
 
@@ -158,17 +189,17 @@ public class MainCtrl {
 
         List<Item> items = itemRepository.findByStartDateIsNotNull();
         // TODO: We need to add the list of categories associated with every item somehow somewhere. Maybe even in a previeous step (fetch it automaticaly using a `find` function)
-
-        return convertToItemDTOs(items);
+        List<ItemDto> response = convertToItemDTOs(items);
+        return response;
     }
 
 
-//    @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
-//    public UserDto get_user(@PathVariable int userId) throws Exception {
-//        Users user = userRepository.findUserByUserId(userId);
-//
-//        return UserMapper.registerUsersToUser(user);
-//    }
+    @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
+    public ItemDto get_auction(@PathVariable int itemId) throws Exception {
+        Item item = itemRepository.findItemByItemId(itemId);
+
+        return ItemMapper.registerItemToItem(item);
+    }
 
     @RequestMapping(value = "/upload_image", method = RequestMethod.POST)
     public UploadFileResponseDto UploadFile(MultipartHttpServletRequest request) throws IOException {
@@ -191,10 +222,10 @@ public class MainCtrl {
             stream.write(file.getBytes());
             stream.close();
 
-            String absolutePath = serverFile.getAbsolutePath();
+            String path = "images/user_uploads/" + fileName;
 
             UploadFileResponseDto uploadFileResponseDto = new UploadFileResponseDto();
-            uploadFileResponseDto.setPath(absolutePath);
+            uploadFileResponseDto.setPath(path);
 
             return uploadFileResponseDto;
         } else {

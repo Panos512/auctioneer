@@ -1,18 +1,17 @@
 package com.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
- * Created by panos on 8/1/16.
+ * Created by Panos on 6/8/16.
  */
 @Entity
 public class ItemCategory {
     private int itemCategoryId;
     private int itemId;
     private int categoryId;
+    private Item itemByItemId;
+    private Category categoryByCategoryId;
 
     @Id
     @Column(name = "ItemCategoryId")
@@ -65,4 +64,24 @@ public class ItemCategory {
         result = 31 * result + categoryId;
         return result;
     }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
+//    public Item getItemByItemId() {
+//        return itemByItemId;
+//    }
+//
+//    public void setItemByItemId(Item itemByItemId) {
+//        this.itemByItemId = itemByItemId;
+//    }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId", nullable = false)
+//    public Category getCategoryByCategoryId() {
+//        return categoryByCategoryId;
+//    }
+//
+//    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+//        this.categoryByCategoryId = categoryByCategoryId;
+//    }
 }

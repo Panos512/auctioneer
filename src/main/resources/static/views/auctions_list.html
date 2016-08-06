@@ -12,7 +12,7 @@
     <div id="products" class="row list-group">
         <div ng-repeat="auction in auctions" class="item  col-xs-4 col-lg-4">
             <div class="thumbnail">
-                <img class="group list-group-image" ng-src="/images/{{$index + 1}}_1.png" alt="" />
+                <img class="group list-group-image" ng-src="{{auction.images[0].photoPath}}"  height="195" width="121" alt="" />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading"><b>{{auction.itemId}}</b>. {{auction.name}}</h4>
                     <p class="group inner list-group-item-text">{{auction.description}}</p>
@@ -24,7 +24,7 @@
                                 Buyout price: $ {{auction.buyPrice}}</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#/auctions">View Details</a>
+                            <a class="btn btn-success" href="#/==">View Details</a>
                         </div>
                     </div>
                 </div>

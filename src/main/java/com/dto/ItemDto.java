@@ -1,10 +1,16 @@
 package com.dto;
 
 import com.dto.CategoryDto;
+import com.entity.Photos;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mappers.PhotoMapper;
 
+import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -28,6 +34,28 @@ public class ItemDto {
     private int sellerId;
     private List<CategoryDto> categories;
 
+    @OneToMany(mappedBy="Item")
+    private List<PhotoDto> images;
+
+    public List<PhotoDto> getImages() {
+        return images;
+    }
+
+    private PhotoDto convertToPhotoDTO(Photos photo) {
+        return PhotoMapper.registerPhotosToPhotoDto(photo);
+    }
+
+    private List<PhotoDto> convertToPhotoDTOs(List<Photos> photos) {
+        return photos.stream()
+                .map(this::convertToPhotoDTO)
+                .collect(toList());
+    }
+
+
+    public void setImages(List<Photos> images) {
+
+        this.images = convertToPhotoDTOs(images);
+    }
 
     public int getItemId() {
         return itemId;
@@ -147,5 +175,27 @@ public class ItemDto {
 
     public void setCategories(List<CategoryDto> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemDto{" +
+                "itemId=" + itemId +
+                ", name='" + name + '\'' +
+                ", currently=" + currently +
+                ", buyPrice=" + buyPrice +
+                ", firstBid=" + firstBid +
+                ", numberOfBids=" + numberOfBids +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", country='" + country + '\'' +
+                ", createdDate=" + createdDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", description='" + description + '\'' +
+                ", sellerId=" + sellerId +
+                ", categories=" + categories +
+                ", images=" + images +
+                '}';
     }
 }
