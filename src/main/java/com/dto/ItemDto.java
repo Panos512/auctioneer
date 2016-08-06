@@ -1,5 +1,6 @@
 package com.dto;
 
+import com.entity.Category;
 import com.dto.CategoryDto;
 import com.entity.Photos;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +33,7 @@ public class ItemDto {
     private Date endDate;
     private String description;
     private int sellerId;
-    private List<CategoryDto> categories;
+    private List<Category> categories;
 
     @OneToMany(mappedBy="Item")
     private List<PhotoDto> images;
@@ -169,11 +170,11 @@ public class ItemDto {
         this.sellerId = sellerId;
     }
 
-    public List<CategoryDto> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoryDto> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
