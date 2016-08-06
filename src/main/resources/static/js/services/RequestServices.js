@@ -76,6 +76,18 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.get_auction = function(auctionId){
+        var url = '/get_auction/'.concat(auctionId);
+
+        return $http.get(url)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
+
     services.get_user = function(userId){
         var url = '/get_user/'.concat(userId);
 

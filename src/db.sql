@@ -5,7 +5,7 @@
 -- version 4.4.10
 -- http://www.phpmyadmin.net
 --
--- Host: localhost:8889
+-- Host: localhost:3306
 -- Generation Time: Jul 31, 2016 at 06:24 PM
 -- Server version: 5.5.42
 -- PHP Version: 7.0.0
