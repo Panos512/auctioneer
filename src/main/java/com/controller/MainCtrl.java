@@ -90,6 +90,13 @@ public class MainCtrl {
         return convertToUsersDTOs(users);
     }
 
+    @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
+    public List<Category> get_categories() throws Exception {
+        // TODO: Need to authenticate with token if the user is admin!!!!!
+        List<Category> categories = categoryRepository.findAll();
+        return categories;
+    }
+
     @RequestMapping(path = "/approve_user", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void approve_user(@RequestBody VerifyRequestDto verifyRequestDto) throws Exception {
         Users user = userRepository.findUserByUserId(verifyRequestDto.getUserId());

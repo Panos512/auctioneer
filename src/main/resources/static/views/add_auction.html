@@ -1,6 +1,5 @@
 <header></header>
 <pending-message></pending-message>
-
 <div class="alert alert-danger" ng-show="error">
     There was a problem logging in. Please try again.
 </div>
@@ -10,6 +9,10 @@
     <div class="form-group">
         <label for="name">Name:</label> <input type="text" class="form-control" id="name" name="name" ng-model="credentials.name"/>
     </div>
+        <div ng-if="categories" class="form-group">
+            <label for="categories">Categories:</label><div ng-dropdown-multiselect="" options="categories" selected-model="selectedCategories" extra-settings="categoryDropdownSettings"></div>
+
+        </div>
         <div class="form-group">
             <label for="description">Description:</label>
             <textarea class="form-control" rows="5" ig="description" name="description" ng-model="credentials.description"></textarea>

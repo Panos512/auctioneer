@@ -46,6 +46,15 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.get_categories = function(){
+        return $http.get('/get_categories')
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
     services.add_auction = function(request){
         return $http.post('/add_auction', request)
             .then(function (response) {
