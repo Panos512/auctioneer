@@ -19,7 +19,6 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     $scope.files = [];
 
     $scope.selectedCategories = [];
-    $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
 
     RequestServices.get_categories().then( function (response){
         $scope.categories = [];
@@ -36,6 +35,8 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
                 $scope.categories.push(cat);
             }
         }
+
+        console.log($scope.categories);
 
 
 
@@ -85,7 +86,14 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         $scope.credentials.createdDate = new Date();
         var cookie = $cookies.getObject('auctioneer_user');
         $scope.credentials.sellerId = cookie.id;
+
+        if ($scope.credentials.categories.length == 0) {
+            $scope.credentials.categories.push({id: 3});
+        }
+
+
         console.log($scope.credentials);
+
 
         RequestServices.add_auction($scope.credentials).then(function (response){
             console.log(response);

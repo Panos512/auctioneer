@@ -105,6 +105,8 @@ INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,
 
 INSERT INTO `Category` VALUES (1, "Video Games");
 INSERT INTO `Category` VALUES (2, "Laptops");
+INSERT INTO `Category` VALUES (3, "Others");
+
 
 INSERT INTO  `ItemCategory` VALUES (1, 1, 1);
 INSERT INTO  `ItemCategory` VALUES (2, 2, 2);
