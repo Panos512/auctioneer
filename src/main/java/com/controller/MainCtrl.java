@@ -1,10 +1,7 @@
 package com.controller;
 
 
-import com.dao.CategoryRepository;
-import com.dao.ItemRepository;
-import com.dao.PhotosRepository;
-import com.dao.UserRepository;
+import com.dao.*;
 
 import com.dto.*;
 
@@ -15,7 +12,6 @@ import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
 import com.user.UserAuthorizer;
-import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -51,6 +47,10 @@ public class MainCtrl {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ItemCategoryRepository itemCategoryRepository;
+
 
     private UserDto convertToUsersDTO(Users user) {
 
@@ -165,26 +165,40 @@ public class MainCtrl {
 
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
 
-
         itemRepository.save(new_item);
         itemRepository.flush();
-
-        List<String> photos = itemAddRequestDto.getPhotos();
         Integer itemId = new_item.getItemId();
+        if (itemAddRequestDto.getPhotos() != null) {
+            List<String> photos = itemAddRequestDto.getPhotos();
 
 
-        photos.forEach(photo -> {
-            Photos photosEntity = new Photos();
+            photos.forEach(photo -> {
+                Photos photosEntity = new Photos();
 
-            photosEntity.setItemByItemid(new_item);
-            System.out.println(itemId);
-            photosEntity.setPhotoPath(photo);
+                photosEntity.setItemByItemid(new_item);
+                photosEntity.setPhotoPath(photo);
 
-            System.out.println(photo);
 
-            photosRepository.save(photosEntity);
-            photosRepository.flush();
-            System.out.println(photosEntity);
+                photosRepository.save(photosEntity);
+                photosRepository.flush();
+                System.out.println(photosEntity);
+            });
+        };
+
+
+        System.out.println("hola");
+        List<CategoryDto> categories = itemAddRequestDto.getCategories();
+
+        categories.forEach(category -> {
+            ItemCategory categoryEntity = new ItemCategory();
+
+            // FIXME: This is really not good. Should be done with jpa.
+            categoryEntity.setCategoryId(category.getId());
+            categoryEntity.setItemId(itemId);
+
+            itemCategoryRepository.save(categoryEntity);
+            itemCategoryRepository.flush();
+            System.out.println(categoryEntity);
         });
 
 

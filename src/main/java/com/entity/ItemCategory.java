@@ -14,6 +14,7 @@ public class ItemCategory {
     private Category categoryByCategoryId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ItemCategoryId")
     public int getItemCategoryId() {
         return itemCategoryId;
