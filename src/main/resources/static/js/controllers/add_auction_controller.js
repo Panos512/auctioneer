@@ -1,6 +1,7 @@
 'use strict';
 
 app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', function($scope, $location, $cookies, RequestServices) {
+    $scope.categories = null;
     $scope.buttonDisabled = false;
     $scope.credentials = {
         name:'A new auction',
@@ -13,9 +14,46 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         endDate: new Date(),
         buyPrice: 100,
         sellerId: '',
-        photos: []
+        categories: []
     };
     $scope.files = [];
+
+    $scope.selectedCategories = [];
+    $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
+
+    RequestServices.get_categories().then( function (response){
+        $scope.categories = [];
+        console.log(response);
+
+        for (var category in response) {
+            if (response.hasOwnProperty(category)) {
+                console.log(category);
+                var cat = {
+                    id: response[category].categoryId,
+                    label: response[category].categoryName
+                };
+                console.log(cat);
+                $scope.categories.push(cat);
+            }
+        }
+
+
+
+    });
+
+    $scope.categoryDropdownSettings = {
+        scrollableHeight: '190px',
+        scrollable: true,
+        enableSearch: true,
+        showCheckAll: false,
+        showUncheckAll: false
+    };
+
+
+
+
+
+
     // $scope.upload=function(){
     //     console.log($scope.files);
     // };
@@ -42,7 +80,8 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     };
 
     $scope.addAuction = function() {
-        $scope.buttonDisabled=  true;
+        // $scope.buttonDisabled=  true; TODO: ENABLE THIS!!!!!!!!!!!!!
+        console.log($scope.selectedCategories);
         $scope.credentials.createdDate = new Date();
         var cookie = $cookies.getObject('auctioneer_user');
         $scope.credentials.sellerId = cookie.id;
