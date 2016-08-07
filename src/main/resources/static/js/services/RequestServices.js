@@ -56,6 +56,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
     };
 
     services.add_auction = function(request){
+        console.log(JSON.stringify(request));
         return $http.post('/add_auction', request)
             .then(function (response) {
                 console.log(response);

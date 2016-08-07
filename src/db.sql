@@ -75,7 +75,7 @@ CREATE TABLE `Category` (
 
 
 CREATE TABLE `ItemCategory` (
-  `ItemCategoryId` int(11) NOT NULL,
+  `ItemCategoryId` int(11) NOT NULL AUTO_INCREMENT,
   `ItemId` int(11) NOT NULL,
   `CategoryId` int(11) NOT NULL,
   PRIMARY KEY (ItemCategoryId),

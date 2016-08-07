@@ -10,7 +10,7 @@
         <label for="name">Name:</label> <input type="text" class="form-control" id="name" name="name" ng-model="credentials.name"/>
     </div>
         <div ng-if="categories" class="form-group">
-            <label for="categories">Categories:</label><div ng-dropdown-multiselect="" options="categories" selected-model="selectedCategories" extra-settings="categoryDropdownSettings"></div>
+            <label for="categories">Categories:</label><div ng-dropdown-multiselect="" options="categories" selected-model="credentials.categories" extra-settings="categoryDropdownSettings"></div>
 
         </div>
         <div class="form-group">

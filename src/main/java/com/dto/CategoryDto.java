@@ -5,22 +5,22 @@ package com.dto;
  */
 public class CategoryDto {
 
-//    private int categoryId;
-    private String categoryName;
+    private int id;
+//    private String categoryName;
 
-//    public int getCategoryId() {
-//        return categoryId;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+//    public String getCategoryName() {
+//        return categoryName;
 //    }
 //
-//    public void setCategoryId(int categoryId) {
-//        this.categoryId = categoryId;
+//    public void setCategoryName(String categoryName) {
+//        this.categoryName = categoryName;
 //    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
 }
