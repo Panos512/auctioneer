@@ -13,6 +13,7 @@ import java.util.List;
 public class Category {
     private int categoryId;
     private String categoryName;
+    private List<Item> items;
 
     @Id
     @Column(name = "CategoryId", nullable = false)
@@ -54,13 +55,13 @@ public class Category {
         result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
         return result;
     }
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "categories")
-//    public List<Item> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(List<Item> items) {
-//        this.items = items;
-//    }
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

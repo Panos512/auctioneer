@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.List;
@@ -216,6 +217,16 @@ public class MainCtrl {
         List<Item> items = itemRepository.findByStartDateIsNotNull();
         return convertToItemDTOs(items);
     }
+    
+    @RequestMapping(path = "/auctions_list_category/{categoryId}", method = RequestMethod.GET, produces = "application/json")
+    public List<ItemDto> auctions_list_category(@PathVariable int categoryId) throws Exception {
+        List<Item> items=itemRepository.findActiveItemsByCategoryId(categoryId);
+        return convertToItemDTOs(items);
+    }
+  
+    
+    
+    
 
     @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
     public ItemDto get_auction(@PathVariable int itemId) throws Exception {
