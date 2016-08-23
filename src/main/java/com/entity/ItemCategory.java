@@ -1,5 +1,7 @@
 package com.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -63,30 +65,37 @@ public class ItemCategory {
         return itemCategoryId;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
-//    public Item getItemByItemId() {
-//        return itemByItemId;
-//    }
-//
-//    public void setItemByItemId(Item itemByItemId) {
-//        this.itemByItemId = itemByItemId;
-//    }
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false, insertable=false, updatable=false)
+    public Item getItemByItemId() {
+        return itemByItemId;
+    }
 
-//    @ManyToOne
-//    @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId", nullable = false)
-//    public Category getCategoryByCategoryId() {
-//        return categoryByCategoryId;
-//    }
-//
-//    public void setCategoryByCategoryId(Category categoryByCategoryId) {
-//        this.categoryByCategoryId = categoryByCategoryId;
-//    }
+    public void setItemByItemId(Item itemByItemId) {
+        this.itemByItemId = itemByItemId;
+    }
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "CategoryId", referencedColumnName = "CategoryId", nullable = false, insertable=false, updatable=false)
+    public Category getCategoryByCategoryId() {
+        return categoryByCategoryId;
+    }
 
-
-
+    public void setCategoryByCategoryId(Category categoryByCategoryId) {
+        this.categoryByCategoryId = categoryByCategoryId;
+    }
 
 
-
+    @Override
+    public String toString() {
+        return "ItemCategory{" +
+                "itemCategoryId=" + itemCategoryId +
+                ", itemId=" + itemId +
+                ", categoryId=" + categoryId +
+                ", itemByItemId=" + itemByItemId +
+                ", categoryByCategoryId=" + categoryByCategoryId +
+                '}';
+    }
 }

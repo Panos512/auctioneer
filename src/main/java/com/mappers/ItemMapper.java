@@ -1,9 +1,6 @@
 package com.mappers;
 
-import com.dto.ItemAddRequestDto;
-import com.dto.ItemAddResponseDto;
-import com.dto.ItemDto;
-import com.dto.PhotoDto;
+import com.dto.*;
 import com.entity.Item;
 import com.entity.Photos;
 
@@ -39,6 +36,34 @@ public class ItemMapper {
         item.setStartDate(itemAddRequestDto.getStartDate());
 
         // TODO: WE NEED TO ADD CATEGORIES TO THE ITEM
+
+        return item;
+    }
+
+    public static Item registerUpdateRequestToItem(ItemUpdateRequestDto itemUpdateRequestDto) {
+
+        if (itemUpdateRequestDto == null)
+            return null;
+
+        Item  item = new Item();
+
+        item.setItemId(itemUpdateRequestDto.getItemId());
+
+        // TODO: THESE NED TO BE CHECKED BEFORE UPDATE (e.g. a new firstBid comes and it's bigger than the current price etc)
+        item.setBuyPrice(itemUpdateRequestDto.getBuyPrice());
+        item.setFirstBid(itemUpdateRequestDto.getFirstBid());
+
+        // TODO: check that dates are sensible
+        item.setStartDate(itemUpdateRequestDto.getStartDate());
+        item.setEndDate(itemUpdateRequestDto.getEndDate());
+
+        item.setCountry(itemUpdateRequestDto.getCountry());
+
+
+        item.setDescription(itemUpdateRequestDto.getDescription());
+        item.setLatitude(itemUpdateRequestDto.getLatitude());
+        item.setLongitude(itemUpdateRequestDto.getLongitude());
+        item.setName(itemUpdateRequestDto.getName());
 
         return item;
     }

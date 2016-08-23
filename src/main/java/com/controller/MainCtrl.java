@@ -8,6 +8,7 @@ import com.dto.*;
 
 import com.entity.*;
 import com.exceptions.BadRequestException;
+import com.mappers.CategoryMapper;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
@@ -52,6 +53,17 @@ public class MainCtrl {
     private ItemCategoryRepository itemCategoryRepository;
 
 
+    private Category convertToCategory(CategoryDto categoryDto) {
+
+        return CategoryMapper.registerDtoToCategory(categoryDto);
+    }
+
+    private List<Category> convertToCategories(List<CategoryDto> categories) {
+        return categories.stream()
+                .map(this::convertToCategory)
+                .collect(toList());
+    }
+
     private UserDto convertToUsersDTO(Users user) {
 
         return UserMapper.registerUsersToUser(user);
@@ -62,6 +74,18 @@ public class MainCtrl {
                 .map(this::convertToUsersDTO)
                 .collect(toList());
     }
+
+    private CategoryDto convertToCategoryDTO(Category category) {
+
+        return CategoryMapper.registerCategoryToDto(category);
+    }
+
+    private List<CategoryDto> convertToCategoryDTOs(List<Category> categories) {
+        return categories.stream()
+                .map(this::convertToCategoryDTO)
+                .collect(toList());
+    }
+
 
     private ItemDto convertToItemDTO(Item item) {
         return ItemMapper.registerItemToItem(item);
@@ -181,24 +205,28 @@ public class MainCtrl {
 
                 photosRepository.save(photosEntity);
                 photosRepository.flush();
-                System.out.println(photosEntity);
             });
         };
 
 
-        System.out.println("hola");
         List<CategoryDto> categories = itemAddRequestDto.getCategories();
 
         categories.forEach(category -> {
-            ItemCategory categoryEntity = new ItemCategory();
+//            ItemCategory categoryEntity = new ItemCategory();
+//
+//            // FIXME: This is really not good. Should be done with jpa.
+//            categoryEntity.setCategoryByCategoryId(CategoryMapper.registerDtoToCategory(category));
+//            categoryEntity.setItemByItemId(new_item);
+//
+//            itemCategoryRepository.save(categoryEntity);
+//            itemCategoryRepository.flush();
 
-            // FIXME: This is really not good. Should be done with jpa.
-            categoryEntity.setCategoryId(category.getId());
-            categoryEntity.setItemId(itemId);
-
-            itemCategoryRepository.save(categoryEntity);
+            ItemCategory catEnt = new ItemCategory();
+            catEnt.setCategoryId(category.getId());
+            catEnt.setItemId(new_item.getItemId());
+            itemCategoryRepository.save(catEnt);
             itemCategoryRepository.flush();
-            System.out.println(categoryEntity);
+
         });
 
 
@@ -210,6 +238,71 @@ public class MainCtrl {
         return itemAddResponseDto; // TODO: Return something meaningful.
 
     }
+
+
+    @RequestMapping(path = "/update_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ItemAddResponseDto register(@RequestBody ItemUpdateRequestDto itemUpdateRequestDto) throws Exception {
+
+        System.out.println(itemUpdateRequestDto);
+        System.out.println("1312");
+        System.out.println(itemCategoryRepository.findAll());
+//        List<ItemCategory> old_categoriez = itemCategoryRepository.findByItemId(12);
+//        System.out.println(old_categoriez);
+        List<ItemCategory> old_categories = itemCategoryRepository.findByItemId(ItemMapper.registerUpdateRequestToItem(itemUpdateRequestDto));
+        System.out.println(old_categories);
+        itemCategoryRepository.delete(old_categories);
+        itemCategoryRepository.flush();
+
+
+        Item new_item = ItemMapper.registerUpdateRequestToItem(itemUpdateRequestDto);
+        itemRepository.save(new_item);
+        itemRepository.flush();
+
+//        if (itemAddRequestDto.getPhotos() != null) {
+//            List<String> photos = itemAddRequestDto.getPhotos();
+//
+//
+//            photos.forEach(photo -> {
+//                Photos photosEntity = new Photos();
+//
+//                photosEntity.setItemByItemid(new_item);
+//                photosEntity.setPhotoPath(photo);
+//
+//
+//                photosRepository.save(photosEntity);
+//                photosRepository.flush();
+//            });
+//        };
+//
+        List<CategoryDto> categories = itemUpdateRequestDto.getCategories();
+
+        // TODO: We should have a way to update categories
+
+
+        List<ItemCategory> to_save = null;
+
+        categories.forEach(category -> {
+            ItemCategory categoryEntity = new ItemCategory();
+
+            // FIXME: This is really not good. Should be done with jpa.
+            categoryEntity.setCategoryByCategoryId(CategoryMapper.registerDtoToCategory(category));
+            categoryEntity.setItemByItemId(new_item);
+            to_save.add(categoryEntity);
+        });
+        System.out.println(to_save);
+        itemCategoryRepository.save(to_save);
+        itemCategoryRepository.flush();
+
+
+
+        // Create dummy response
+        ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
+        itemAddResponseDto.setItemId(new_item.getItemId());
+
+        return itemAddResponseDto; // TODO: Return something meaningful.
+
+    }
+
 
     @RequestMapping(path = "/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {

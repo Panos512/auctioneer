@@ -10,15 +10,13 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         latitude: 12,
         longitude: 6,
         country: 'Greece',
-        startDate: new Date(),
+        startDate: null,
         endDate: new Date(),
         buyPrice: 100,
         sellerId: '',
         categories: []
     };
     $scope.files = [];
-
-    $scope.selectedCategories = [];
 
     RequestServices.get_categories().then( function (response){
         $scope.categories = [];
@@ -81,8 +79,7 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     };
 
     $scope.addAuction = function() {
-        // $scope.buttonDisabled=  true; TODO: ENABLE THIS!!!!!!!!!!!!!
-        console.log($scope.selectedCategories);
+        $scope.buttonDisabled=  true;
         $scope.credentials.createdDate = new Date();
         var cookie = $cookies.getObject('auctioneer_user');
         $scope.credentials.sellerId = cookie.id;

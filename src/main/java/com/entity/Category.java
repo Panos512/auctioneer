@@ -54,7 +54,16 @@ public class Category {
         result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
         return result;
     }
-//    @JsonIgnore
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
+                '}';
+    }
+
+    //    @JsonIgnore
 //    @ManyToMany(mappedBy = "categories")
 //    public List<Item> getItems() {
 //        return items;
