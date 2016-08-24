@@ -16,7 +16,12 @@
     <dt>End Date:</dt>
     <dd>{{credentials.endDate}}
     <dt>Seller:</dt>
-    <dd><a href="">SellersNameClickable</a></dd>
+    <dd><a href="#/profile/{{credentials.sellerId}}">View Sellers Profile!</a></dd>
+
+    <div ng-repeat="image in credentials.images">
+        <img class="group list-group-image" ng-src="{{image.photoPath}}" />
+    </div>
+
 
     <form role="form" ng-submit="PlaceBid">
         <div class="form-group align-center">

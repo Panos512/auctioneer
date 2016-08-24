@@ -28,7 +28,7 @@ public class Bids {
     }
 
     @Basic
-    @Column(name = "UserId")
+    @Column(name = "UserId", insertable = false, updatable = false)
     public int getUserId() {
         return userId;
     }
@@ -38,7 +38,7 @@ public class Bids {
     }
 
     @Basic
-    @Column(name = "ItemId")
+    @Column(name = "ItemId", insertable = false, updatable = false)
     public int getItemId() {
         return itemId;
     }
@@ -93,23 +93,23 @@ public class Bids {
         return result;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "UserId", referencedColumnName = "UserID", nullable = false)
-//    public Users getUsersByUserId() {
-//        return usersByUserId;
-//    }
-//
-//    public void setUsersByUserId(Users usersByUserId) {
-//        this.usersByUserId = usersByUserId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
-//    public Item getItemByItemId() {
-//        return itemByItemId;
-//    }
-//
-//    public void setItemByItemId(Item itemByItemId) {
-//        this.itemByItemId = itemByItemId;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "UserId", referencedColumnName = "UserID", nullable = false)
+    public Users getUsersByUserId() {
+        return usersByUserId;
+    }
+
+    public void setUsersByUserId(Users usersByUserId) {
+        this.usersByUserId = usersByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "ItemId", referencedColumnName = "ItemId", nullable = false)
+    public Item getItemByItemId() {
+        return itemByItemId;
+    }
+
+    public void setItemByItemId(Item itemByItemId) {
+        this.itemByItemId = itemByItemId;
+    }
 }
