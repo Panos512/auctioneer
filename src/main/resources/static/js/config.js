@@ -37,6 +37,11 @@ app.config(function($routeProvider, $httpProvider){
             controller: 'GetAuctionController',
             controllerAs: 'controller'
         })
+        .when('/profile/:userId?',{
+            templateUrl: "/views/view_profile.html",
+            controller: 'GetProfileController',
+            controllerAs: 'controller'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

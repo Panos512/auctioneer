@@ -5,7 +5,7 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     $scope.buttonDisabled = false;
     $scope.credentials = {
         name:'A new auction',
-        description: 'This is a description for the first auction and it needs to be somhow big. So, I will continue typing for some more characters in order to make thi big enough. I think thats enough.. Or maybe not. Ok Bye!',
+        description: 'This is a description for the first auction and it needs to be somehow big. So, I will continue typing for some more characters in order to make thi big enough. I think thats enough.. Or maybe not. Ok Bye!',
         firstBid: 10,
         latitude: 12,
         longitude: 6,
@@ -14,7 +14,8 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         endDate: new Date(),
         buyPrice: 100,
         sellerId: '',
-        categories: []
+        categories: [],
+        photos: []
     };
     $scope.files = [];
 
