@@ -15,7 +15,4 @@ app.controller('GetProfileController', ['$scope', '$routeParams', 'RequestServic
             $scope.current_user = response;
         });
 
-    $scope.PlaceBid = function(){
-        $scope.buttonDisabled=  true;
-    };
 }]);
