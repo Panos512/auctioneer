@@ -63,6 +63,16 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
+    }
+
+    services.place_bid = function(request){
+        console.log(JSON.stringify(request));
+        return $http.post('/place_bid', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
     };
 
     services.upload_files = function(request){

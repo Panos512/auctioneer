@@ -8,9 +8,11 @@ import com.dto.*;
 
 import com.entity.*;
 import com.exceptions.BadRequestException;
+import com.mappers.BidMapper;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.user.UserAuthorizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import sun.jvm.hotspot.debugger.cdbg.basic.BasicCDebugInfoDataBase;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -43,8 +46,8 @@ public class MainCtrl {
     @Autowired
     private UserAuthorizer userAuthorizer;
 
-    //@Autowired
-    //private ItemCategoryRepository itemCategoryRepository;
+    @Autowired
+    private BidRepository bidRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -233,6 +236,31 @@ public class MainCtrl {
         Item item = itemRepository.findItemByItemId(itemId);
 
         return ItemMapper.registerItemToItem(item);
+    }
+
+    @RequestMapping(path="/place_bid", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void place_bid(@RequestBody BidDto bidDto) throws Exception {
+
+        System.out.println(bidDto);
+
+        Item item = itemRepository.findItemByItemId(bidDto.getItemId());
+
+        System.out.println(item);
+
+        item.setCurrently(bidDto.getOfferPrice());
+
+        item.setNumberOfBids(item.getNumberOfBids() + 1);
+
+        itemRepository.save(item);
+        itemRepository.flush();
+
+        System.out.println("saved");
+
+        bidRepository.save(BidMapper.registerDtoToBid(bidDto));
+        bidRepository.flush();
+
+
+
     }
 
     @RequestMapping(value = "/upload_image", method = RequestMethod.POST)

@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('GetAuctionController', ['$scope', '$routeParams', 'RequestServices', function($scope, $routeParams, RequestServices ) {
+app.controller('GetAuctionController', ['$scope', '$cookies', '$routeParams', 'RequestServices', function($scope, $cookies, $routeParams, RequestServices ) {
     $scope.buttonDisabled = false;
 
     // RequestServices.auctions_list().then(function (response){
@@ -13,9 +13,26 @@ app.controller('GetAuctionController', ['$scope', '$routeParams', 'RequestServic
     RequestServices.get_auction(auctionId)
         .then(function(response) {
             $scope.credentials = response;
+            $scope.maxBid = response.currently;
         });
 
     $scope.PlaceBid = function(){
+        console.log('123');
+
         $scope.buttonDisabled=  true;
+        var cookie = $cookies.getObject('auctioneer_user');
+
+        var request = {
+            userId: cookie.id,
+            itemId: $scope.credentials.itemId,
+            bidDate: new Date(),
+            offerPrice: $scope.maxBid
+        };
+
+        RequestServices.place_bid(request)
+            .then(function(response) {
+                console.log(response);
+            });
     };
+
 }]);
