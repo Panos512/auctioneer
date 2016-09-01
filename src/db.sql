@@ -94,6 +94,18 @@ CREATE TABLE `Photos` (
 );
 
 
+CREATE TABLE `Messages` (
+  `MsgId` int(11) NOT NULL AUTO_INCREMENT,
+  `UserId1` int(11) NOT NULL,
+  `UserId2` int(11) NOT NULL,
+  `Text` varchar(255) NOT NULL,
+  `Read` boolean NOT NULL,
+  PRIMARY KEY (MsgId),
+  FOREIGN KEY (`UserId1`) REFERENCES `Users` (`UserID`),
+  FOREIGN KEY (`UserId2`) REFERENCES `Users` (`UserID`)
+
+);
+
 
 INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
   (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 37.434003, 25.274956, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
