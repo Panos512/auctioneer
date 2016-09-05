@@ -12,6 +12,7 @@ import com.mappers.BidMapper;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
 import com.mappers.ItemMapper;
+import com.mappers.MessageMapper;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.user.UserAuthorizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class MainCtrl {
 
     @Autowired
     private ItemCategoryRepository itemCategoryRepository;
+    
+    @Autowired
+    private MessageRepository messageRepository;
 
 
     private UserDto convertToUsersDTO(Users user) {
@@ -235,6 +239,14 @@ public class MainCtrl {
 
         return ItemMapper.registerItemToItem(item);
     }
+    
+    
+    @RequestMapping(path = "/sentmessage", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void sentMessage(@RequestBody MessageDto pMessage) throws Exception {
+    	Message newMessage=MessageMapper.convertMessageDtoToEnitry(pMessage);
+        messageRepository.save(newMessage);
+        messageRepository.flush();
+      }
 
     @RequestMapping(path="/place_bid", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void place_bid(@RequestBody BidDto bidDto) throws Exception {

@@ -96,13 +96,13 @@ CREATE TABLE `Photos` (
 
 CREATE TABLE `Messages` (
   `MsgId` int(11) NOT NULL AUTO_INCREMENT,
-  `UserId1` int(11) NOT NULL,
-  `UserId2` int(11) NOT NULL,
-  `Text` varchar(255) NOT NULL,
-  `Read` boolean NOT NULL,
+  `UserIdSender` int(11) NOT NULL,
+  `UserIdReceiver` int(11) NOT NULL,
+  `MessageText` varchar(255) NOT NULL,
+  `HasRead` boolean NOT NULL,
   PRIMARY KEY (MsgId),
-  FOREIGN KEY (`UserId1`) REFERENCES `Users` (`UserID`),
-  FOREIGN KEY (`UserId2`) REFERENCES `Users` (`UserID`)
+  FOREIGN KEY (`UserIdSender`) REFERENCES `Users` (`UserID`),
+  FOREIGN KEY (`UserIdReceiver`) REFERENCES `Users` (`UserID`)
 
 );
 
