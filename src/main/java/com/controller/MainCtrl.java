@@ -78,6 +78,23 @@ public class MainCtrl {
                 .map(this::convertToItemDTO)
                 .collect(toList());
     }
+    
+    private MessageDto convertToMessageDTO(Message msg) {
+        return MessageMapper.convertMessageEntityToDto(msg);
+    }
+    
+    
+    
+    
+    private List<MessageDto> convertToMessageDTOs(List<Message> items) {
+        return items.stream()
+                .map(this::convertToMessageDTO)
+                .collect(toList());
+    }    
+    
+    
+    
+    
 
     private PhotoDto convertToPhotoDTO(Photos photo) {
         return PhotoMapper.registerPhotosToPhotoDto(photo);
@@ -247,6 +264,27 @@ public class MainCtrl {
         messageRepository.save(newMessage);
         messageRepository.flush();
       }
+    
+    
+    @RequestMapping(path = "/inbox/{idReceiver}", method = RequestMethod.GET,  produces = "application/json")
+    public List<MessageDto> inbox(@PathVariable int idReceiver	) throws Exception {
+    	
+    	List<Message> inboxList = messageRepository.getInboxMessages(idReceiver);
+    	return convertToMessageDTOs(inboxList);
+      }
+    
+    @RequestMapping(path = "/outbox/{idSender}", method = RequestMethod.GET,  produces = "application/json")
+    public List<MessageDto> outbox(@PathVariable int idSender	) throws Exception {
+    	
+    	List<Message> outboxList = messageRepository.getOutboxMessages(idSender);
+    	return convertToMessageDTOs(outboxList);
+      }
+    
+    
+    
+    
+    
+    
 
     @RequestMapping(path="/place_bid", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void place_bid(@RequestBody BidDto bidDto) throws Exception {
