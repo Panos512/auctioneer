@@ -15,8 +15,14 @@
     <dd>{{credentials.buyPrice}}</dd>
     <dt>End Date:</dt>
     <dd>{{credentials.endDate}}
+    <dt>Map:</dt>
+    <dd><ng-map center="[{{credentials.latitude}}, {{credentials.longitude}}]">
+        <marker position="[{{credentials.latitude}}, {{credentials.longitude}}]" />
+    </ng-map></dd>
     <dt>Seller:</dt>
     <dd><a href="#/profile/{{credentials.sellerId}}">View Sellers Profile!</a></dd>
+
+
 
     <div ng-repeat="image in credentials.images">
         <img class="group list-group-image" ng-src="{{image.photoPath}}" />

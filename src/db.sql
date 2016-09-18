@@ -108,10 +108,10 @@ CREATE TABLE `Messages` (
 
 
 INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
-  (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 37.434003, 25.274956, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
+  (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 46.2463691, 6.0247886, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
   
   INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
-  (2, 'Seintaridis', 'Tzitzifiogos', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 37.434003, 25.274956, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
+  (2, 'Seintaridis', 'Tzitzifiogos', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 46.2463691, 6.0247886, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
 
 INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,  `Number_Of_Bids`,  `Latitude`,  `Longitude`,  `Country`,  `CreatedDate`,  `StartDate`,  `EndDate`,  `Description`,  `SellerId`) VALUES
                     (1, "Playstation 4", 150, 200, 100, 3, 42.1, 6.1, "Greece", STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('15-08-2016', '%d-%m-%Y'), "Playstation 4 in great condition, bought on 2016. Comes with 4 games and 2 controllers. Also available 3rd remote." , 1);
