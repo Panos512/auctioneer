@@ -82,7 +82,7 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     };
 
     $scope.addAuction = function() {
-        // $scope.buttonDisabled=  true; TODO: ENABLE THIS!!!!!!!!!!!!!
+        $scope.buttonDisabled=  true;
         console.log($scope.selectedCategories);
         $scope.credentials.createdDate = new Date();
         var cookie = $cookies.getObject('auctioneer_user');

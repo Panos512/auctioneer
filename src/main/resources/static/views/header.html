@@ -5,7 +5,8 @@
     <ul class="nav nav-pills" role="tablist">
         <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
         <li ng-class="{ active: isActive('/auctions')}"><a href="#/auctions">Auctions</a></li>
-        <li ng-class="{ active: isActive('/add_auction')}" ng-show="authenticated"><a href="#/add_auction">Add Auction</a></li>
+        <li ng-class="{ active: isActive('/add_auction')}" ng-show="authenticated"><a href="#/add_auction">Add Auction</a>
+        <li ng-class="{ active: isActive('/messages')}" ng-show="authenticated"><a href="#/messages">Messages</a></li>
         <li ng-class="{ active: isActive('/login')}" ng-show="!authenticated"><a href="#/login">LogIn</a></li>
         <li ng-class="{ active: isActive('/signup')}" ng-show="!authenticated"><a href="#/signup">SignUp</a></li>
         <li ng-class="{ active: isActive('/admin_panel')}" ng-show="authenticated.role === 'admin'"><a href="#/admin_panel">Admin Panel</a></li>

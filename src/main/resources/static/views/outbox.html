@@ -1,0 +1,54 @@
+<div class="container" ng-controller="OutboxController">
+
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Search users" ng-model="searchUser">
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+        <tr>
+            <td>
+                <a href="" ng-click="sortType = 'message.userIdReceiver'; sortReverse = !sortReverse">
+                    To
+                    <span ng-show="sortType == 'user.userIdReceiver' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'user.userIdReceiver' && sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="" ng-click="sortType = 'user.messageText'; sortReverse = !sortReverse">
+                    Message
+                    <span ng-show="sortType == 'user.messageText' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'user.messageText' && sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="message in messages | orderBy:sortType:sortReverse | filter:searchUser">
+            <td>{{message.userIdReceiver}}</td>
+            <td><a ng-click="show_message(message)" href="">{{message.messageText}}</a></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+
+
+    <div ng-if="current_message">
+        <div class="col-xs-12">
+            <h2 class="cap">{{current_message.userIdReceiver}}</h2>
+        </div>
+        <div class="col-md-3 col-xs-6 small">
+            <label>Message:</label> {{current_message.messageText}}<br>
+        </div>
+        <div class="col-xs-12"><hr></div>
+    </div>
+
+</div>
