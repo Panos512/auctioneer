@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('GetAuctionController', ['$scope', '$cookies', '$routeParams', 'RequestServices', function($scope, $cookies, $routeParams, RequestServices ) {
+app.controller('GetAuctionController', ['$scope', '$cookies', '$routeParams', 'RequestServices', 'NgMap', function($scope, $cookies, $routeParams, RequestServices, NgMap) {
     $scope.buttonDisabled = false;
 
     // RequestServices.auctions_list().then(function (response){
@@ -15,6 +15,12 @@ app.controller('GetAuctionController', ['$scope', '$cookies', '$routeParams', 'R
             $scope.credentials = response;
             $scope.maxBid = response.currently;
         });
+
+    NgMap.getMap().then(function(map) {
+        console.log(map.getCenter());
+        console.log('markers', map.markers);
+        console.log('shapes', map.shapes);
+    });
 
     $scope.PlaceBid = function(){
         console.log('123');
