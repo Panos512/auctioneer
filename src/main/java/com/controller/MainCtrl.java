@@ -258,7 +258,7 @@ public class MainCtrl {
     }
     
     
-    @RequestMapping(path = "/sentmessage", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(path = "/send_message", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void sentMessage(@RequestBody MessageDto pMessage) throws Exception {
     	Message newMessage=MessageMapper.convertMessageDtoToEnitry(pMessage);
         messageRepository.save(newMessage);

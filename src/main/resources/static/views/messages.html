@@ -1,0 +1,48 @@
+<header></header>
+<pending-message></pending-message>
+<div class="alert alert-danger" ng-show="error">
+    There was a problem logging in. Please try again.
+</div>
+
+<h1>Messages</h1>
+
+<div ng-cloak="" class="tabsdemoDynamicHeight">
+    <md-content>
+        <md-tabs md-dynamic-height="" md-border-bottom="">
+            <md-tab label="New Message">
+                <md-content class="md-padding">
+                    <form role="form" ng-submit="sendMessage()" style="padding: 40px;" ng-cloak="">
+
+                        <md-content>
+                            <div class="form-group">
+                                <label class="foo">To:</label>
+                                <input type="number" min="0" step="1" class="form-control" name="id" ng-model="credentials.send.userIdReceiver"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">Message:<br></label> <textarea class="form-control" name="name" id="name" rows="4" cols="50" ng-model="credentials.send.messageText"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <md-button type="submit" ng-disabled="buttonDisabled">Sent Message</md-button>
+                            </div>
+                        </md-content>
+
+                    </form>
+                </md-content>
+            </md-tab>
+            <md-tab label="Inbox">
+                <md-content class="md-padding">
+                    <inbox-messages></inbox-messages>
+                </md-content>
+            </md-tab>
+            <md-tab label="Outbox">
+                <md-content class="md-padding">
+                    <outbox-messages></outbox-messages>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
+
+

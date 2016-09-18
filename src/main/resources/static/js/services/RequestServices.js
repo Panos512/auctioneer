@@ -75,6 +75,16 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.send_message = function(request){
+        console.log(JSON.stringify(request));
+        return $http.post('/send_message', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
     services.upload_files = function(request){
         console.log(request);
         request = request[0]._file;
@@ -89,6 +99,28 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     services.auctions_list = function(){
         return $http.get('/auctions_list')
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
+    services.get_inbox = function(userId){
+        var url = '/inbox/'.concat(userId);
+
+        return $http.get(url)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
+    services.get_outbox = function(userId){
+        var url = '/outbox/'.concat(userId);
+
+        return $http.get(url)
             .then(function (response) {
                 console.log(response);
                 return response.data;
