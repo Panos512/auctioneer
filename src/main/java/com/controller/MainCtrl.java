@@ -239,16 +239,16 @@ public class MainCtrl {
         List<Item> items = itemRepository.findByStartDateIsNotNull();
         return convertToItemDTOs(items);
     }
-    
+
     @RequestMapping(path = "/auctions_list_category/{categoryId}", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list_category(@PathVariable int categoryId) throws Exception {
         List<Item> items=itemRepository.findActiveItemsByCategoryId(categoryId);
         return convertToItemDTOs(items);
     }
-  
-    
-    
-    
+
+
+
+
 
     @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
     public ItemDto get_auction(@PathVariable int itemId) throws Exception {
@@ -256,30 +256,51 @@ public class MainCtrl {
 
         return ItemMapper.registerItemToItem(item);
     }
-    
-    
+
+
     @RequestMapping(path = "/send_message", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void sentMessage(@RequestBody MessageDto pMessage) throws Exception {
-    	Message newMessage=MessageMapper.convertMessageDtoToEnitry(pMessage);
+        Message newMessage=MessageMapper.convertMessageDtoToEnitry(pMessage);
         messageRepository.save(newMessage);
         messageRepository.flush();
-      }
-    
-    
+    }
+
+
     @RequestMapping(path = "/inbox/{idReceiver}", method = RequestMethod.GET,  produces = "application/json")
     public List<MessageDto> inbox(@PathVariable int idReceiver	) throws Exception {
-    	
+
     	List<Message> inboxList = messageRepository.getInboxMessages(idReceiver);
     	return convertToMessageDTOs(inboxList);
       }
-    
+
     @RequestMapping(path = "/outbox/{idSender}", method = RequestMethod.GET,  produces = "application/json")
     public List<MessageDto> outbox(@PathVariable int idSender	) throws Exception {
-    	
-    	List<Message> outboxList = messageRepository.getOutboxMessages(idSender);
-    	return convertToMessageDTOs(outboxList);
-      }
-    
+
+        List<Message> outboxList = messageRepository.getOutboxMessages(idSender);
+        return convertToMessageDTOs(outboxList);
+    }
+
+    @RequestMapping(path = "/mark_read", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain")
+    public void markRead(@RequestBody MessageDto messageDto) throws Exception {
+        System.out.println(messageDto);
+        Message message = MessageMapper.convertMessageDtoToEnitry(messageDto);
+
+        message.setHasRead(true);
+
+        messageRepository.save(message);
+
+        messageRepository.flush();
+
+    }
+
+    @RequestMapping(path = "/get_unread/{idReceiver}", method = RequestMethod.GET,  produces = "text/plain")
+    public String getUnread(@PathVariable int idReceiver	) throws Exception {
+
+
+        String messageCount = messageRepository.getUnreadMessages(idReceiver);
+
+        return messageCount;
+    }
     
     
     

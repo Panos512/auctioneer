@@ -38,5 +38,14 @@ public class MessageDto {
 		this.userIdReceiver = userIdReceiver;
 	}
 
-
+	@Override
+	public String toString() {
+		return "MessageDto{" +
+				"msgId=" + msgId +
+				", hasRead=" + hasRead +
+				", messageText='" + messageText + '\'' +
+				", userIdSender=" + userIdSender +
+				", userIdReceiver=" + userIdReceiver +
+				'}';
+	}
 }

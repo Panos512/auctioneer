@@ -1,9 +1,25 @@
 'use strict';
 
-app.controller('NavController', ['$scope', '$cookies', '$location', 'sharedProperties', function($scope, $cookies, $location, sharedProperties) {
+app.controller('NavController', ['$scope', '$cookies', '$location', 'sharedProperties', 'RequestServices', function($scope, $cookies, $location, sharedProperties, RequestServices) {
 
     $scope.authenticated = $cookies.getObject('auctioneer_user');
     console.log($scope.authenticated);
+
+    $scope.unreadMessages = false;
+
+    $scope.$on("getUnread", function(){
+        RequestServices.get_unread($scope.authenticated.id).then(function (response) {
+            console.log(response);
+            $scope.unreadMessages = response;
+
+            if (response == "0") {
+                $scope.unreadMessages = false;
+            }
+        })
+    });
+
+    $scope.$broadcast("getUnread");
+
 
     $scope.logout = function() {
         console.log('bye');
