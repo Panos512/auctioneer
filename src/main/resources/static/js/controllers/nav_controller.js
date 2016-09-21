@@ -9,7 +9,6 @@ app.controller('NavController', ['$scope', '$cookies', '$location', 'sharedPrope
 
     $scope.$on("getUnread", function(){
         RequestServices.get_unread($scope.authenticated.id).then(function (response) {
-            console.log(response);
             $scope.unreadMessages = response;
 
             if (response == "0") {

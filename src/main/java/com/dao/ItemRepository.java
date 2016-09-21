@@ -24,5 +24,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     
     @Query("SELECT i FROM Item i where i.itemId in (select itemId from ItemCategory where categoryId=:categoryId) AND i.startDate < now() and now() < i.endDate")
     public List<Item> findActiveItemsByCategoryId(@Param("categoryId") int categoryId);
+
 }
 
