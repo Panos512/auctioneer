@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('InboxController', ['$scope', '$cookies', 'RequestServices', function($scope, $cookies, RequestServices) {
+app.controller('InboxController', ['$scope','$rootScope', '$cookies', 'RequestServices', function($scope,$rootScope, $cookies, RequestServices) {
 
     $scope.sortType     = 'name'; // default sort type
     $scope.sortReverse  = false;  // default sort order
@@ -13,6 +13,11 @@ app.controller('InboxController', ['$scope', '$cookies', 'RequestServices', func
 
     $scope.show_message = function (message) {
         $scope.current_message = message;
+        console.log(message);
+        RequestServices.mark_read(message).then(function (response){
+            console.log(response);
+            $rootScope.$broadcast("getUnread");
+        })
     };
 
 

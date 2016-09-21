@@ -63,7 +63,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 return response.data;
             });
 
-    }
+    };
 
     services.place_bid = function(request){
         console.log(JSON.stringify(request));
@@ -127,6 +127,28 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             });
 
     };
+
+    services.mark_read = function(request){
+        console.log(JSON.stringify(request));
+        return $http.post('/mark_read', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
+    services.get_unread = function(userId){
+        var url = '/get_unread/'.concat(userId);
+
+        return $http.get(url)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
 
     services.get_auction = function(auctionId){
         var url = '/get_auction/'.concat(auctionId);

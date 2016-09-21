@@ -24,7 +24,9 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
   
     @Query("SELECT m FROM Message m WHERE userIdSender=:userIdSender")
     public List<Message> getOutboxMessages(@Param("userIdSender") int msgId);
-  
+
+    @Query("SELECT count(*) FROM Message m WHERE userIdReceiver=:userIdReceiver AND HasRead=false")
+    public String getUnreadMessages(@Param("userIdReceiver") int msgId);
         
    
 }
