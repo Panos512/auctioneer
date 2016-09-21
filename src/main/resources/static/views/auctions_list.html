@@ -5,6 +5,7 @@
         <label>Name: <input ng-model="search.name"></label><br>
         <label>Description: <input ng-model="search.description"></label><br>
         <label>Bid Price Range: <input type="number" name="filterBidMin" ng-model="filterModelMin.bid" /> to <input type="number" name="filterBidMax" ng-model="filterModelMax.bid" /></label><br>
+        <select ng-model="filterItem" ng-options="category.categoryName for category in filterOptions"></select>
         <div class="btn-group">
             <a href="#/auctions" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
             </span>List</a> <a href="#/auctions" id="grid" class="btn btn-default btn-sm"><span
@@ -12,7 +13,7 @@
         </div>
     </div>
     <div id="products" class="row list-group">
-        <div ng-repeat="auction in auctions | filter:search:strict | filter:byRange('currently', filterModelMin.bid, filterModelMax.bid)" class="item  col-xs-4 col-lg-4">
+        <div data-ng-repeat="auction in auctions | filter:search:strict | filter:byRange('currently', filterModelMin.bid, filterModelMax.bid) | filter:categoriesFilter" class="item  col-xs-4 col-lg-4">
             <div class="thumbnail">
                 <img class="group list-group-image" ng-src="{{auction.images[0].photoPath}}"  height="195" width="121" alt="" />
                 <div class="caption">
