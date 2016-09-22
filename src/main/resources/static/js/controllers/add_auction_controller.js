@@ -19,6 +19,12 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
     };
     $scope.files = [];
 
+    $scope.options = {
+        types: 'geocode',
+        watchEnter: true,
+        country: 'gr'
+    };
+
     $scope.selectedCategories = [];
 
     RequestServices.get_categories().then( function (response){
@@ -92,6 +98,10 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
             $scope.credentials.categories.push({id: 3});
         }
 
+        var address = $scope.details.geometry.location;
+
+        $scope.credentials.latitude = address.lat();
+        $scope.credentials.longitude = address.lng();
 
         console.log($scope.credentials);
 
