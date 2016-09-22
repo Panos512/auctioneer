@@ -1,9 +1,12 @@
 'use strict';
 
-app.controller('AuctionsController', ['$scope', 'RequestServices', function($scope, RequestServices ) {
+app.controller('AuctionsController', ['$scope', 'RequestServices', function($scope, RequestServices) {
 
-    // $scope.mapInput.latitude = 0;
-    // $scope.mapInput.lontitude = 0;
+    $scope.options = {
+        types: 'geocode',
+        watchEnter: true,
+        country: 'gr'
+    };
 
     $(document).ready(function() {
         $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
@@ -24,12 +27,13 @@ app.controller('AuctionsController', ['$scope', 'RequestServices', function($sco
         $scope.auctions = response;
     });
 
+    $scope.filterItem ={
+        categoryName: "Show All",
+        categoryId: 0
+    };
+
     RequestServices.get_categories().then(function (response){
-        var default_option = {
-            categoryName: "Show All",
-            categoryId: 0
-        };
-        response.unshift(default_option);
+        response.unshift($scope.filterItem);
         $scope.filterOptions = response;
 
         $scope.filterItem = $scope.filterOptions[0];
@@ -37,7 +41,6 @@ app.controller('AuctionsController', ['$scope', 'RequestServices', function($sco
     });
 
     $scope.categoriesFilter = function (data) {
-        console.log($scope.filterItem);
         if ($scope.filterItem.categoryName == "Show All") {
             return true;
         }
@@ -48,6 +51,23 @@ app.controller('AuctionsController', ['$scope', 'RequestServices', function($sco
                 return false;
             }
         }
+    };
+
+
+    $scope.mapFilter = function (data) {
+        if (typeof $scope.details != 'undefined' && $scope.geoloc != ""){
+
+            var input = $scope.details.geometry.location;
+            var point = new google.maps.LatLng(data.latitude, data.longitude);
+
+            if (google.maps.geometry.spherical.computeDistanceBetween(input, point) <= 10000){
+                return true;
+            }
+
+            return false;
+        }
+
+        return true;
     };
 
 

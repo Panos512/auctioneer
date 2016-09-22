@@ -31,13 +31,14 @@
         <label for="country">Country:</label> <input type="text"
                                                    class="form-control" id="country" name="country" ng-model="credentials.country"/>
     </div>
+    <!--<div class="form-group">-->
+        <!--<label for="latitude">Latitude:</label> <input type="text"-->
+                                                       <!--class="form-control" id="latitude" name="latitude" ng-model="credentials.latitude"/>-->
+    <!--</div>-->
     <div class="form-group">
-        <label for="latitude">Latitude:</label> <input type="text"
-                                                       class="form-control" id="latitude" name="latitude" ng-model="credentials.latitude"/>
-    </div>
-    <div class="form-group">
-        <label for="longitude">longitude:</label> <input type="text"
-                                                           class="form-control" id="longitude" name="longitude" ng-model="credentials.longitude"/>
+        <!--<label for="longitude">longitude:</label> <input type="text"-->
+                                                           <!--class="form-control" id="longitude" name="longitude" ng-model="credentials.longitude"/>-->
+        <label for="address">Address:  <input type="text" style="width: 290%;" class="form-control" id="address" name="address" ng-autocomplete ng-model="geoloc" options="options" details="details"/></label><br>
     </div>
     <div class="form-group">
         <label for="startDate">Start Date:</label>
