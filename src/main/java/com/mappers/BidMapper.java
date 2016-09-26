@@ -4,6 +4,7 @@ import com.dto.BidDto;
 import com.dto.PhotoDto;
 import com.entity.Bids;
 import com.entity.Photos;
+import com.oxMappers.BidJax;
 
 
 /**
@@ -23,5 +24,18 @@ public class BidMapper {
 
         return bid;
     }
+    
+    public Bids bidJaxToBid(BidJax bidJax) {
+    	Bids bid = new Bids();
+    //	bid.setBidDate(bidJax.getTime());
+        //bid.setItemId(itemId);
+        //bid.setOfferPrice(bidJax.getAmount());
+    	
+    	return bid;
+    	
+    }
+    
+    
+    
 
 }

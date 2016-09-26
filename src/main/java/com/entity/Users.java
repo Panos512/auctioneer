@@ -1,7 +1,10 @@
 package com.entity;
 
 import javax.persistence.*;
+
+
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Panos on 6/8/16.
@@ -14,11 +17,11 @@ public class Users {
     private String password;
     private String username;
     private String email;
-    private double buyerRating;
-    private double sellerRating;
+    private Double buyerRating;
+    private Double sellerRating;
     private String address;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
     private String afm;
     private String phone;
     private String role;
@@ -26,6 +29,10 @@ public class Users {
     private Boolean verified;
     private Collection<Bids> bidsesByUserId;
     private Collection<Item> itemsByUserId;
+    
+  //bi-directional many-to-one association to Item
+  	
+  	private List<Item> items;
 
     @Id
     @Column(name = "UserID")
@@ -89,21 +96,21 @@ public class Users {
 
     @Basic
     @Column(name = "BuyerRating")
-    public double getBuyerRating() {
+    public Double getBuyerRating() {
         return buyerRating;
     }
 
-    public void setBuyerRating(double buyerRating) {
+    public void setBuyerRating(Double buyerRating) {
         this.buyerRating = buyerRating;
     }
 
     @Basic
     @Column(name = "SellerRating")
-    public double getSellerRating() {
+    public Double getSellerRating() {
         return sellerRating;
     }
 
-    public void setSellerRating(double sellerRating) {
+    public void setSellerRating(Double sellerRating) {
         this.sellerRating = sellerRating;
     }
 
@@ -119,21 +126,21 @@ public class Users {
 
     @Basic
     @Column(name = "Latitude")
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
     @Basic
     @Column(name = "Longitude")
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -187,6 +194,17 @@ public class Users {
         this.verified = verified;
     }
 
+    @OneToMany(mappedBy="user")
+    public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

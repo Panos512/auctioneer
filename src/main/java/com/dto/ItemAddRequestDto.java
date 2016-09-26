@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
+import com.entity.Users;
+
 /**
  * Created by dimitris on 7/24/16.
  */
@@ -19,8 +21,16 @@ public class ItemAddRequestDto {
     private Date startDate;
     private Date endDate;
     private String description;
-    private int sellerId;
-    private List<CategoryDto> categories;
+    private Users seller;
+    public Users getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Users seller) {
+		this.seller = seller;
+	}
+
+	private List<CategoryDto> categories;
     private List<String> photos;
 
     public List<String> getPhotos() {
@@ -111,13 +121,7 @@ public class ItemAddRequestDto {
         this.description = description;
     }
 
-    public int getSellerId() {
-        return sellerId;
-    }
 
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
-    }
 
     public List<CategoryDto> getCategories() {
         return categories;
@@ -140,7 +144,7 @@ public class ItemAddRequestDto {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
-                ", sellerId=" + sellerId +
+                ", sellerId=" + seller.getUserId() +
                 ", categories=" + categories +
                 ", photos=" + photos +
                 '}';

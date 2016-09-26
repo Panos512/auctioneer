@@ -11,6 +11,8 @@ import com.exceptions.BadRequestException;
 import com.mappers.BidMapper;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
+import com.oxMappers.ItemJax;
+import com.oxMappers.ItemsJax;
 import com.mappers.ItemMapper;
 import com.mappers.MessageMapper;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
@@ -22,10 +24,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
@@ -364,6 +372,64 @@ public class MainCtrl {
         }
 
     }
+    
+    
+    
+    @RequestMapping(path="/importXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void importXml() throws Exception{
+    	try {
+        	//	C:\\Users\dimitris\git\auctioneer\src\main\resources\ebay-data\ebay-data\items-0.xml
+        		File file = new File("src/main/resources/ebay-data/ebay-data/items-0.xml");
+        		JAXBContext jaxbContext = JAXBContext.newInstance(ItemsJax.class);
+
+        		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+        		ItemsJax itemsJax = (ItemsJax) jaxbUnmarshaller.unmarshal(file);
+        		
+        		
+        		
+        		for (ItemJax itemJax: itemsJax.getItem()){
+        			//itemJax.get
+        			
+        			
+        			
+        		}
+        		
+        		
+        		
+        		System.out.println(itemsJax);
+
+        	  } catch (JAXBException e) {
+        		e.printStackTrace();
+        	  }
+    	
+    }
+    
+    
+    @RequestMapping(path="/exprortXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public byte [] exprortXml() throws Exception{
+    	
+    	  try {
+              ItemsJax items = new ItemsJax();
+              items.getItem().addAll(itemRepository.findAll().stream().map(ItemMapper::item2ItemJax).collect(Collectors.toList()));
+              JAXBContext jaxbContext = JAXBContext.newInstance(ItemsJax.class);
+              Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+              jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+              ByteArrayOutputStream bos = new ByteArrayOutputStream();
+              jaxbMarshaller.marshal(items, bos);
+              return bos.toByteArray();
+          } catch (JAXBException e) {
+              e.printStackTrace();
+          }
+          return null;
+      }
+    	
+    	
+    
+    
+    
+    
+    
 
     @ExceptionHandler(Exception.class)
     public void notFound(HttpServletResponse e) throws Exception {

@@ -4,12 +4,17 @@
 package com.mappers;
 
 
-import com.dto.UserSignUpRequestDto;
 import com.dto.UserDto;
+import com.dto.UserSignUpRequestDto;
 import com.entity.Users;
+import com.oxMappers.SellerJax;
+
 
 
 public class UserMapper {
+
+
+
 
     public static Users registerRequestToUser(UserSignUpRequestDto userSignUpDto) {
 
@@ -60,5 +65,14 @@ public class UserMapper {
         userDto.setSellerRating(user.getSellerRating());
 
         return userDto;
+    }
+
+
+    public static SellerJax mapUserToSellerJax(Users user) {
+        SellerJax seller = new SellerJax();
+        seller.setUserID(user.getUsername());
+        if (user.getSellerRating() != null)
+            seller.setRating(user.getSellerRating().toString());
+        return seller;
     }
 }

@@ -4,12 +4,19 @@ import com.dto.ItemAddRequestDto;
 import com.dto.ItemAddResponseDto;
 import com.dto.ItemDto;
 import com.dto.PhotoDto;
+import com.entity.Category;
 import com.entity.Item;
 import com.entity.Photos;
+import com.oxMappers.ItemJax;
+import com.oxMappers.ItemsJax;
+import com.oxMappers.LocationJax;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+
+import java.util.LinkedList;
 
 /**
  * Created by panos on 8/1/16.
@@ -35,7 +42,7 @@ public class ItemMapper {
         item.setLongitude(itemAddRequestDto.getLongitude());
         item.setName(itemAddRequestDto.getName());
         item.setNumberOfBids(0);
-        item.setSellerId(itemAddRequestDto.getSellerId());
+        item.setUser(itemAddRequestDto.getSeller());
         item.setStartDate(itemAddRequestDto.getStartDate());
 
         // TODO: WE NEED TO ADD CATEGORIES TO THE ITEM
@@ -73,7 +80,7 @@ public class ItemMapper {
         itemDto.setLongitude(item.getLongitude());
         itemDto.setName(item.getName());
         itemDto.setNumberOfBids(item.getNumberOfBids());
-        itemDto.setSellerId(item.getSellerId());
+        itemDto.setSellerId(item.getUser().getUserId());
         itemDto.setStartDate(item.getStartDate());
         itemDto.setCategories(item.getCategories());
 
@@ -81,4 +88,42 @@ public class ItemMapper {
 
         return itemDto;
     }
+    
+    public static ItemJax item2ItemJax(Item item)
+    {
+    	ItemJax itemJax =new ItemJax();
+        itemJax.setItemID(String.valueOf(item.getItemId()));
+        itemJax.setName(item.getName());
+        itemJax.getCategory().addAll(item.getCategories().stream().map(CategoryMapper::mapCategoryToCategoryJAX).collect(Collectors.toList()));
+        itemJax.setCurrently(item.getCurrently().toString());
+        itemJax.setBuyPrice(item.getBuyPrice().toString());
+        itemJax.setFirstBid(item.getFirstBid().toString());
+        itemJax.setNumberOfBids(item.getNumberOfBids().toString());
+        LocationJax loc = new LocationJax();
+        //TODO add location to database
+        if (item.getLatitude() != null)
+            loc.setLatitude(String.valueOf(item.getLatitude()));
+        if (item.getLongitude() != null)
+            loc.setLongitude(String.valueOf(item.getLongitude()));
+        itemJax.setLocation(loc);
+        itemJax.setCountry(item.getCountry());
+        if (item.getStartDate()!=null)
+         itemJax.setStarted(item.getStartDate().toString());
+        itemJax.setEnds(item.getEndDate().toString());
+        itemJax.setDescription(item.getDescription());
+        
+        itemJax.setSeller(UserMapper.mapUserToSellerJax(item.getUser()));
+
+
+        
+        
+    	return itemJax;
+    }
+    
+    
+    
+    
+    
+    
+    
 }

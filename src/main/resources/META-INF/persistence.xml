@@ -8,9 +8,9 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
         <class>com.entity.Category</class>
         <class>com.entity.Item</class>
         <class>com.entity.ItemCategory</class>
+        <class>com.entity.Message</class>
         <class>com.entity.Photos</class>
         <class>com.entity.Users</class>
-        <class>com.entity.Message</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/auctioneer" />
             <property name="javax.persistence.jdbc.user" value="root" />

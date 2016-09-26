@@ -1,6 +1,8 @@
 package com.entity;
 
 import javax.persistence.*;
+
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
@@ -14,19 +16,36 @@ public class Item {
     private int itemId;
     private String name;
     private BigDecimal currently;
-    private BigDecimal buyPrice;
-    private BigDecimal firstBid;
-    private Integer numberOfBids;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
     private String country;
     private Date createdDate;
     private Date startDate;
     private Date endDate;
     private String description;
     private List<Category> categories;
-    private int sellerId;
-//    private Collection<Bids> bidsesByItemId;
+  
+    private BigDecimal buyPrice;
+    private BigDecimal firstBid;
+    private Integer numberOfBids;
+  
+    
+    
+ 
+	private Users user;
+    
+    
+	   @ManyToOne(fetch=FetchType.LAZY)
+	    @JoinColumn(name="SellerId")	  
+public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	//    private Collection<Bids> bidsesByItemId;
 //    private Users usersBySellerId;
 //    private Collection<ItemCategory> itemCategoriesByItemId;
     private List<Photos> photosesByItemId;
@@ -94,21 +113,21 @@ public class Item {
 
     @Basic
     @Column(name = "Latitude")
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
     @Basic
     @Column(name = "Longitude")
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -162,15 +181,7 @@ public class Item {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "SellerId")
-    public int getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(int sellerId) {
-        this.sellerId = sellerId;
-    }
+  
 
 
 
@@ -196,7 +207,7 @@ public class Item {
         if (itemId != item.itemId) return false;
         if (Double.compare(item.latitude, latitude) != 0) return false;
         if (Double.compare(item.longitude, longitude) != 0) return false;
-        if (sellerId != item.sellerId) return false;
+        if (user.getUserId() != item.getUser().getUserId()) return false;
         if (name != null ? !name.equals(item.name) : item.name != null) return false;
         if (currently != null ? !currently.equals(item.currently) : item.currently != null) return false;
         if (buyPrice != null ? !buyPrice.equals(item.buyPrice) : item.buyPrice != null) return false;
@@ -230,7 +241,7 @@ public class Item {
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + sellerId;
+        result = 31 * result + user.getUserId();
         return result;
     }
 
@@ -279,7 +290,7 @@ public class Item {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
-                ", sellerId=" + sellerId +
+                ", sellerId=" + user.getUserId() +
                 ", photosesByItemId=" + photosesByItemId +
                 '}';
     }
