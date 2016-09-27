@@ -20,6 +20,15 @@ app.controller('InboxController', ['$scope','$rootScope', '$cookies', 'RequestSe
         })
     };
 
+    $scope.delete_message = function (message) {
+        console.log(message);
+        RequestServices.delete_message(message).then(function (response){
+            console.log(response);
+            $scope.messages = _.without($scope.messages, _.findWhere($scope.messages, message));
+            $rootScope.$broadcast("getUnread");
+        })
+    };
+
 
 
     RequestServices.get_inbox(cookie.id).then(function (response){

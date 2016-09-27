@@ -138,6 +138,16 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.delete_message = function(request){
+        console.log(JSON.stringify(request));
+        return $http.post('/delete_message', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
     services.get_unread = function(userId){
         var url = '/get_unread/'.concat(userId);
 
