@@ -31,6 +31,7 @@ public class ItemMapper {
 
         Item  item = new Item();
 
+        item.setItemId(itemAddRequestDto.getItemId());
         item.setBuyPrice(itemAddRequestDto.getBuyPrice());
         item.setCountry(itemAddRequestDto.getCountry());
         item.setCreatedDate(itemAddRequestDto.getCreatedDate());

@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-import com.entity.Users;
-
 /**
  * Created by dimitris on 7/24/16.
  */
-public class ItemAddRequestDto {
+public class ItemUpdateRequestDto {
 
     private int itemId;
     private String name;
@@ -18,25 +16,11 @@ public class ItemAddRequestDto {
     private double latitude;
     private double longitude;
     private String country;
-    private Date createdDate;
     private Date startDate;
     private Date endDate;
     private String description;
-    private Users seller;
-    public Users getSeller() {
-		return seller;
-	}
-
-	public void setSeller(Users seller) {
-		this.seller = seller;
-	}
-
-	private List<CategoryDto> categories;
-    private List<String> photos;
-
-    public List<String> getPhotos() {
-        return photos;
-    }
+    private int sellerId;
+    private List<CategoryDto> categories;
 
     public int getItemId() {
         return itemId;
@@ -44,10 +28,6 @@ public class ItemAddRequestDto {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
-    }
-
-    public void setPhotos(List<String> photos) {
-        this.photos = photos;
     }
 
     public String getName() {
@@ -98,14 +78,6 @@ public class ItemAddRequestDto {
         this.country = country;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Date getStartDate() {
         return startDate;
     }
@@ -130,7 +102,13 @@ public class ItemAddRequestDto {
         this.description = description;
     }
 
+    public int getSellerId() {
+        return sellerId;
+    }
 
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
+    }
 
     public List<CategoryDto> getCategories() {
         return categories;
@@ -143,20 +121,17 @@ public class ItemAddRequestDto {
     @Override
     public String toString() {
         return "ItemAddRequestDto{" +
-                "itemId=" + itemId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", buyPrice=" + buyPrice +
                 ", firstBid=" + firstBid +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", country='" + country + '\'' +
-                ", createdDate=" + createdDate +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
-                ", sellerId=" + seller.getUserId() +
+                ", sellerId=" + sellerId +
                 ", categories=" + categories +
-                ", photos=" + photos +
                 '}';
     }
 }

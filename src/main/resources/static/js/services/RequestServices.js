@@ -161,6 +161,15 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.update_auction = function(request){
+        console.log('updating');
+        return $http.post('/update_auction', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+    };
+
 
     services.get_user = function(userId){
         var url = '/get_user/'.concat(userId);
