@@ -2,6 +2,14 @@
 
 app.controller('GetAuctionController', ['$scope', '$cookies', '$routeParams', 'RequestServices', 'NgMap', function($scope, $cookies, $routeParams, RequestServices, NgMap) {
     $scope.buttonDisabled = false;
+    $scope.notGuest = false;
+
+    var cookie = $cookies.getObject('auctioneer_user');
+
+    if (typeof cookie != 'undefined') {
+        $scope.notGuest = true;
+    }
+
 
     // RequestServices.auctions_list().then(function (response){
     //     console.log(response);
