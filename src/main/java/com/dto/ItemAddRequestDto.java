@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
+import com.dao.UserRepository;
 import com.entity.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by dimitris on 7/24/16.
@@ -22,16 +24,18 @@ public class ItemAddRequestDto {
     private Date startDate;
     private Date endDate;
     private String description;
-    private Users seller;
-    public Users getSeller() {
-		return seller;
-	}
+    private int sellerId;
 
-	public void setSeller(Users seller) {
-		this.seller = seller;
-	}
 
-	private List<CategoryDto> categories;
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    private List<CategoryDto> categories;
     private List<String> photos;
 
     public List<String> getPhotos() {
@@ -154,7 +158,7 @@ public class ItemAddRequestDto {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
-                ", sellerId=" + seller.getUserId() +
+                ", sellerId=" + sellerId +
                 ", categories=" + categories +
                 ", photos=" + photos +
                 '}';

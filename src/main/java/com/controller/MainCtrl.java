@@ -193,7 +193,7 @@ public class MainCtrl {
     public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
-
+        new_item.setUser(userRepository.findUserByUserId(itemAddRequestDto.getSellerId()));
         itemRepository.save(new_item);
         itemRepository.flush();
         Integer itemId = new_item.getItemId();
@@ -215,7 +215,6 @@ public class MainCtrl {
         };
 
 
-        System.out.println("hola");
         List<CategoryDto> categories = itemAddRequestDto.getCategories();
 
         categories.forEach(category -> {
@@ -434,6 +433,7 @@ public class MainCtrl {
 
         System.out.println(itemAddRequestDto);
         Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
+        item.setUser(userRepository.findUserByUserId(itemAddRequestDto.getSellerId()));
         System.out.println(item);
         itemRepository.save(item);
         itemRepository.flush();

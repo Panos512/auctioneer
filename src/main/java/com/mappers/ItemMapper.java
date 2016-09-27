@@ -1,5 +1,6 @@
 package com.mappers;
 
+import com.dao.UserRepository;
 import com.dto.ItemAddRequestDto;
 import com.dto.ItemAddResponseDto;
 import com.dto.ItemDto;
@@ -10,6 +11,7 @@ import com.entity.Photos;
 import com.oxMappers.ItemJax;
 import com.oxMappers.ItemsJax;
 import com.oxMappers.LocationJax;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,8 @@ import java.util.LinkedList;
  * Created by panos on 8/1/16.
  */
 public class ItemMapper {
+
+
 
 
     public static Item registerRequestToItem(ItemAddRequestDto itemAddRequestDto) {
@@ -43,7 +47,7 @@ public class ItemMapper {
         item.setLongitude(itemAddRequestDto.getLongitude());
         item.setName(itemAddRequestDto.getName());
         item.setNumberOfBids(0);
-        item.setUser(itemAddRequestDto.getSeller());
+        item.setUser(null);
         item.setStartDate(itemAddRequestDto.getStartDate());
 
         // TODO: WE NEED TO ADD CATEGORIES TO THE ITEM

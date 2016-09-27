@@ -290,7 +290,6 @@ public Users getUser() {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", description='" + description + '\'' +
-                ", sellerId=" + user.getUserId() +
                 ", photosesByItemId=" + photosesByItemId +
                 '}';
     }

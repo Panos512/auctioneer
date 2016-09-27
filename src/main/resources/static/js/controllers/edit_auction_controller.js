@@ -72,7 +72,7 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
             if (response.hasOwnProperty(category)) {
                 console.log(category);
                 var cat = {
-                    id: response[caCtegory].categoryId,
+                    id: response[category].categoryId,
                     label: response[category].categoryName
                 };
                 console.log(cat);
