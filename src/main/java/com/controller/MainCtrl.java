@@ -270,6 +270,14 @@ public class MainCtrl {
         messageRepository.flush();
     }
 
+    @RequestMapping(path = "/delete_message", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void delete_message(@RequestBody MessageDto pMessage) throws Exception {
+        Message message = MessageMapper.convertMessageDtoToEnitry(pMessage);
+
+        messageRepository.delete(message);
+        messageRepository.flush();
+    }
+
 
     @RequestMapping(path = "/inbox/{idReceiver}", method = RequestMethod.GET,  produces = "application/json")
     public List<MessageDto> inbox(@PathVariable int idReceiver	) throws Exception {
@@ -419,12 +427,6 @@ public class MainCtrl {
           }
           return null;
       }
-    	
-    	
-    
-    
-    
-    
     
 
 

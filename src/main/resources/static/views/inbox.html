@@ -27,6 +27,11 @@
                     <span ng-show="sortType == 'user.messageText' && sortReverse" class="fa fa-caret-up"></span>
                 </a>
             </td>
+            <td>
+                    Delete
+                    <span ng-show="sortType == 'user.messageText' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'user.messageText' && sortReverse" class="fa fa-caret-up"></span>
+            </td>
         </tr>
         </thead>
 
@@ -34,6 +39,7 @@
         <tr ng-repeat="message in messages | orderBy:sortType:sortReverse | filter:searchUser">
             <td>{{message.userIdSender}}</td>
             <td><a ng-click="show_message(message)" href="">{{message.messageText}}</a></td>
+            <td><button ng-click="delete_message(message)" type="button" class="btn btn-danger">Delete Message</button></td>
         </tr>
         </tbody>
 
