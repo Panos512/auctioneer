@@ -192,10 +192,8 @@ public class MainCtrl {
     @RequestMapping(path = "/add_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
-        System.out.println(itemAddRequestDto);
-
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
-
+        new_item.setUser(userRepository.findUserByUserId(itemAddRequestDto.getSellerId()));
         itemRepository.save(new_item);
         itemRepository.flush();
         Integer itemId = new_item.getItemId();
@@ -217,7 +215,6 @@ public class MainCtrl {
         };
 
 
-        System.out.println("hola");
         List<CategoryDto> categories = itemAddRequestDto.getCategories();
 
         categories.forEach(category -> {
@@ -362,7 +359,6 @@ public class MainCtrl {
             stream.close();
 
             String path = "images/user_uploads/" + fileName;
-            System.out.println(path);
             UploadFileResponseDto uploadFileResponseDto = new UploadFileResponseDto();
             uploadFileResponseDto.setPath(path);
 
@@ -430,6 +426,57 @@ public class MainCtrl {
     
     
     
+
+
+    @RequestMapping(path = "/update_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ItemAddResponseDto updateAuction(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+
+        System.out.println(itemAddRequestDto);
+        Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
+        item.setUser(userRepository.findUserByUserId(itemAddRequestDto.getSellerId()));
+        System.out.println(item);
+        itemRepository.save(item);
+        itemRepository.flush();
+
+        List<CategoryDto> categories = itemAddRequestDto.getCategories();
+
+        categories.forEach(category -> {
+            ItemCategory categoryEntity = new ItemCategory();
+
+            // FIXME: This is really not good. Should be done with jpa.
+            categoryEntity.setCategoryId(category.getId());
+            categoryEntity.setItemId(item.getItemId());
+
+            itemCategoryRepository.save(categoryEntity);
+            itemCategoryRepository.flush();
+        });
+
+
+        List<String> photos = itemAddRequestDto.getPhotos();
+
+
+        photos.forEach(photo -> {
+            Photos photosEntity = new Photos();
+
+            photosEntity.setItemByItemid(item);
+            photosEntity.setPhotoPath(photo);
+
+
+            photosRepository.save(photosEntity);
+            photosRepository.flush();
+            System.out.println(photosEntity);
+        });
+
+
+
+        // Create dummy response
+        ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
+        itemAddResponseDto.setItemId(item.getItemId());
+
+        return itemAddResponseDto; // TODO: Return something meaningful.
+
+    }
+
 
     @ExceptionHandler(Exception.class)
     public void notFound(HttpServletResponse e) throws Exception {

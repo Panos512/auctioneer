@@ -1,0 +1,65 @@
+<header></header>
+<pending-message></pending-message>
+<div class="alert alert-danger" ng-show="error">
+    There was a problem logging in. Please try again.
+</div>
+
+<form role="form" ng-submit="addAuction()" style="padding: 40px;" ng-cloak="">
+    <md-content>
+    <div class="form-group">
+        <label for="name">Name:</label> <input type="text" class="form-control" id="name" name="name" ng-model="credentials.name"/>
+    </div>
+        <div class="form-group">
+            <label for="categories">Categories:</label><div ng-dropdown-multiselect="" options="categories" selected-model="credentials.categories" extra-settings="categoryDropdownSettings"></div>
+
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" rows="5" ig="description" name="description" ng-model="credentials.description"></textarea>
+        </div>
+    <div class="form-group">
+        <label class="foo">Starting Bid:</label>
+        <!--<span class="input-group-addon">$</span>-->
+        <input type="number" min="0" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" name="firstBid" ng-model="credentials.firstBid"/>
+    </div>
+        <div class="form-group">
+            <label class="foo">Buyout Price:</label>
+            <!--<span class="input-group-addon">$</span>-->
+            <input type="number" min="0" step="0.01" value="0" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" name="buyPrice" ng-model="credentials.buyPrice"/>
+        </div>
+    <div class="form-group">
+        <label for="country">Country:</label> <input type="text"
+                                                   class="form-control" id="country" name="country" ng-model="credentials.country"/>
+    </div>
+    <div class="form-group">
+        <label for="latitude">Latitude:</label> <input type="text"
+                                                       class="form-control" id="latitude" name="latitude" ng-model="credentials.latitude"/>
+    </div>
+    <div class="form-group">
+        <label for="longitude">longitude:</label> <input type="text"
+                                                           class="form-control" id="longitude" name="longitude" ng-model="credentials.longitude"/>
+    </div>
+    <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <md-datepicker ng-model="credentials.startDate" md-placeholder="Start Date:"></md-datepicker>
+    </div>
+        <div class="form-group">
+            <label for="endDate">End Date:</label>
+            <md-datepicker ng-model="credentials.endDate" md-placeholder="End Date:"></md-datepicker>
+        </div>
+
+        <input type="file" ng-file-model="files" multiple/>
+        <button type="button" ng-click="upload()">Upload</button>
+
+
+        <p ng-repeat="file in files">
+            {{file.name}}
+        </p>
+
+
+        <div class="form-group">
+            <md-button type="submit" ng-disabled="buttonDisabled">Update Auction</md-button>
+        </div>
+    </md-content>
+
+</form>

@@ -47,10 +47,10 @@ app.controller('AuctionsController', ['$scope', 'RequestServices', function($sco
         for (var i=0; i < data.categories.length; i++) {
             if (data.categories[i].categoryId === $scope.filterItem.categoryId) {
                 return true;
-            }  else {
-                return false;
             }
         }
+
+        return false;
     };
 
 

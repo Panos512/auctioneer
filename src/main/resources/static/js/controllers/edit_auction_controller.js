@@ -1,9 +1,12 @@
 'use strict';
 
-app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', function($scope, $location, $cookies, RequestServices) {
-    $scope.categories = null;
+app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$routeParams', 'RequestServices', function($scope, $location, $cookies, $routeParams, RequestServices) {
+    // $scope.categories = [];
+    $scope.categories = [];
+
     $scope.buttonDisabled = false;
     $scope.credentials = {
+        itemId: 0,
         name:'A new auction',
         description: 'This is a description for the first auction and it needs to be somehow big. So, I will continue typing for some more characters in order to make thi big enough. I think thats enough.. Or maybe not. Ok Bye!',
         firstBid: 10,
@@ -17,13 +20,47 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         categories: [],
         photos: []
     };
-    $scope.files = [];
+    $scope.params = $routeParams;
+    var auctionId = $scope.params.auctionId;
 
-    $scope.options = {
-        types: 'geocode',
-        watchEnter: true,
-        country: 'gr'
-    };
+    RequestServices.get_auction(auctionId).then( function (response){
+
+        // TODO: User should be able to delete photos.
+        // response.photos = response.images;
+        response.photos = [];
+        delete response.images;
+
+        $scope.credentials = response;
+        $scope.ItemCategories = [];
+
+        for (var category in $scope.credentials.categories) {
+            if ($scope.credentials.categories.hasOwnProperty(category)) {
+                console.log(category);
+                var cat = {
+                    id: $scope.credentials.categories[category].categoryId
+                };
+                console.log(cat);
+                $scope.ItemCategories.push(cat);
+            }
+        }
+        $scope.credentials.categories = $scope.ItemCategories;
+        console.log($scope.credentials.categories);
+
+        $scope.credentials.startDate = new Date($scope.credentials.startDate);
+        $scope.credentials.endDate = new Date($scope.credentials.endDate);
+        var d1 = new Date($scope.credentials.endDate);
+        var d2 = new Date('1/1/1970');
+        if (d1.getTime() === d2.getTime()) {
+            $scope.credentials.endDate = null;
+        }
+        else {
+            $scope.credentials.endDate = new Date($scope.credentials.endDate);
+        }
+
+        console.log($scope.credentials);
+
+    });
+
 
     $scope.selectedCategories = [];
 
@@ -42,7 +79,6 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
                 $scope.categories.push(cat);
             }
         }
-
         console.log($scope.categories);
 
 
@@ -56,15 +92,6 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
         showCheckAll: false,
         showUncheckAll: false
     };
-
-
-
-
-
-
-    // $scope.upload=function(){
-    //     console.log($scope.files);
-    // };
 
     $scope.upload= function(){
         var files = $scope.files;
@@ -84,26 +111,19 @@ app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'Requ
 
     };
 
+
     $scope.addAuction = function() {
         $scope.buttonDisabled=  true;
-        console.log($scope.selectedCategories);
-        $scope.credentials.createdDate = new Date();
-        var cookie = $cookies.getObject('auctioneer_user');
-        $scope.credentials.sellerId = cookie.id;
 
         if ($scope.credentials.categories.length == 0) {
             $scope.credentials.categories.push({id: 3});
         }
 
-        var address = $scope.details.geometry.location;
-
-        $scope.credentials.latitude = address.lat();
-        $scope.credentials.longitude = address.lng();
 
         console.log($scope.credentials);
 
 
-        RequestServices.add_auction($scope.credentials).then(function (response){
+        RequestServices.update_auction($scope.credentials).then(function (response){
             console.log(response);
             $location.path("/");
         })
