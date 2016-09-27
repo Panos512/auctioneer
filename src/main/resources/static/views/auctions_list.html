@@ -14,7 +14,7 @@
         </div>
     </div>
     <div id="products" class="row list-group">
-        <div data-ng-repeat="auction in auctions | filter:search:strict | filter:byRange('currently', filterModelMin.bid, filterModelMax.bid) | filter:categoriesFilter | filter:mapFilter" class="item  col-xs-4 col-lg-4">
+        <div dir-paginate="auction in auctions | filter:search:strict | filter:byRange('currently', filterModelMin.bid, filterModelMax.bid) | filter:categoriesFilter | filter:mapFilter | itemsPerPage:3" class="item  col-xs-4 col-lg-4">
             <div class="thumbnail">
                 <img class="group list-group-image" ng-src="{{auction.images[0].photoPath}}"  height="195" width="121" alt="" />
                 <div class="caption">
@@ -35,3 +35,9 @@
             </div>
         </div>
     </div>
+
+<dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+</dir-pagination-controls>
