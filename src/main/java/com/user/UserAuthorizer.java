@@ -23,4 +23,9 @@ public class UserAuthorizer {
     public Integer getUserId(UUID token){
         return concurrentHashMapObject.get(token);
     }
+    
+    public void removeUserSession(UUID token){
+    	concurrentHashMapObject.remove(token);
+    	
+    }
 }

@@ -180,6 +180,13 @@ public class MainCtrl {
         userAuthorizer.setUserSession(generatedToken, user.getUserId());
         return userLogInResponseDto;
     }
+    
+    @RequestMapping(path = "/logout", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void logout(@RequestHeader(value="token")String token){
+    	userAuthorizer.removeUserSession(UUID.fromString(token));
+    	System.out.println("fdf");
+    	
+    }
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public UserSignUpResponseDto register(@RequestBody UserSignUpRequestDto userSignUpRequestDto) throws Exception {
