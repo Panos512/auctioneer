@@ -113,32 +113,48 @@ public class MainCtrl {
                 .map(this::convertToPhotoDTO)
                 .collect(toList());
     }
-
-    @RequestMapping(path = "/get_user_list", method = RequestMethod.GET, produces = "application/json")
-    public List<UserDto> get_users_list() throws Exception {
-        // TODO: Need to authenticate with token if the user is admin!!!!!
-        List<Users> users = userRepository.findAll();
-        return convertToUsersDTOs(users);
+    
+    
+   private void  isUserAdmin(String token) throws BadRequestException{
+    	UUID ltoken=UUID.fromString(token);
+    	Integer userId =userAuthorizer.getUserId(ltoken);
+    	Users user= userRepository.findUserByUserId(userId);
+    	if (!user.getRole().equals("admin"))
+    		throw new BadRequestException("User is not admin");
+    	
     }
 
+    @RequestMapping(path = "/get_user_list", method = RequestMethod.GET, produces = "application/json")
+    public List<UserDto> get_users_list(@RequestHeader(value="token")String token) throws Exception {
+    	isUserAdmin(token);    		
+        List<Users> users = userRepository.findAll();
+        return convertToUsersDTOs(users);
+		
+    }
+
+
+    
+    
     @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
-    public List<Category> get_categories() throws Exception {
-        // TODO: Need to authenticate with token if the user is admin!!!!!
+    public List<Category> get_categories(@RequestHeader(value="token")String token) throws Exception {
+    	isUserAdmin(token);
         List<Category> categories = categoryRepository.findAll();
         return categories;
     }
 
     @RequestMapping(path = "/approve_user", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void approve_user(@RequestBody VerifyRequestDto verifyRequestDto) throws Exception {
-        Users user = userRepository.findUserByUserId(verifyRequestDto.getUserId());
+    public void approve_user(@RequestBody VerifyRequestDto verifyRequestDto,@RequestHeader(value="token")String token) throws Exception {
+    	isUserAdmin(token);
+    	Users user = userRepository.findUserByUserId(verifyRequestDto.getUserId());
 
         user.setVerified(Boolean.TRUE);
         userRepository.save(user);
     }
 
     @RequestMapping(path = "/get_user/{userId}", method = RequestMethod.GET, produces = "application/json")
-    public UserDto get_user(@PathVariable int userId) throws Exception {
-        Users user = userRepository.findUserByUserId(userId);
+    public UserDto get_user(@PathVariable int userId,@RequestHeader(value="token")String token) throws Exception {
+    	isUserAdmin(token);
+    	Users user = userRepository.findUserByUserId(userId);
 
         return UserMapper.registerUsersToUser(user);
     }
@@ -147,7 +163,7 @@ public class MainCtrl {
     @ExceptionHandler({BadRequestException.class})
     public UserLogInResponseDto login(@RequestBody UserLoginRequestDto userLogInRequestDto) throws Exception {
         //search for user
-        Users user = userRepository.findUserByUsernameAndPassword(userLogInRequestDto.getUsername(), userLogInRequestDto.getPassword());
+      Users user = userRepository.findUserByUsernameAndPassword(userLogInRequestDto.getUsername(), userLogInRequestDto.getPassword());
         if (user == null)
             throw new BadRequestException("User not found");
         //generate session token
@@ -161,7 +177,7 @@ public class MainCtrl {
 
 
         //put session token to hashmap
-        userAuthorizer.setUserSession(generatedToken, (long) user.getUserId());
+        userAuthorizer.setUserSession(generatedToken, user.getUserId());
         return userLogInResponseDto;
     }
 

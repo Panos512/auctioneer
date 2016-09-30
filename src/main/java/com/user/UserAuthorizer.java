@@ -12,15 +12,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserAuthorizer {
-    private Map<UUID, Long> concurrentHashMapObject = new ConcurrentHashMap<UUID, Long>();
+    private Map<UUID,Integer> concurrentHashMapObject = new ConcurrentHashMap<UUID, Integer>();
 
 
-    public void setUserSession(UUID token, Long userId) {
+    public void setUserSession(UUID token, Integer userId) {
         concurrentHashMapObject.put(token, userId);
     }
 
 
-    public Long getUserId(UUID token){
+    public Integer getUserId(UUID token){
         return concurrentHashMapObject.get(token);
     }
 }
