@@ -98,11 +98,22 @@ public class MainCtrl {
         return items.stream()
                 .map(this::convertToMessageDTO)
                 .collect(toList());
-    }    
-    
-    
-    
-    
+    }
+
+    private BidDto convertToBidsDTO(Bids bid) {
+
+        return BidMapper.registerBidToDto(bid);
+    }
+
+    private List<BidDto> convertToBidsDTOs(List<Bids> bids) {
+        return bids.stream()
+                .map(this::convertToBidsDTO)
+                .collect(toList());
+    }
+
+
+
+
 
     private PhotoDto convertToPhotoDTO(Photos photo) {
         return PhotoMapper.registerPhotosToPhotoDto(photo);
@@ -116,12 +127,22 @@ public class MainCtrl {
     
     
    private void  isUserAdmin(String token) throws BadRequestException{
-    	UUID ltoken=UUID.fromString(token);
-    	Integer userId =userAuthorizer.getUserId(ltoken);
-    	Users user= userRepository.findUserByUserId(userId);
-    	if (!user.getRole().equals("admin"))
-    		throw new BadRequestException("User is not admin");
-    	
+        UUID ltoken=UUID.fromString(token);
+        Integer userId =userAuthorizer.getUserId(ltoken);
+        Users user= userRepository.findUserByUserId(userId);
+        if (!user.getRole().equals("admin"))
+            throw new BadRequestException("User is not admin");
+
+    }
+
+    private Users get_user_info(String token) throws BadRequestException{
+        UUID ltoken=UUID.fromString(token);
+        Integer userId =userAuthorizer.getUserId(ltoken);
+        Users user= userRepository.findUserByUserId(userId);
+        if (user == null)
+            throw new BadRequestException("User not found");
+        return user;
+
     }
 
     @RequestMapping(path = "/get_user_list", method = RequestMethod.GET, produces = "application/json")
@@ -133,11 +154,32 @@ public class MainCtrl {
     }
 
 
+    @RequestMapping(path = "/get_my_auctions", method = RequestMethod.GET, produces = "application/json")
+    public List<AuctionBidsDto> get_my_auctions(@RequestHeader(value="token")String token) throws Exception {
+        Users user = get_user_info(token);
+        List<Item> items = user.getItems();
+
+        List<AuctionBidsDto> my_bids = new ArrayList();
+        items.forEach(item -> {
+            AuctionBidsDto auctionBidsDto = new AuctionBidsDto();
+            auctionBidsDto.setItemId(item.getItemId());
+            auctionBidsDto.setItemName(item.getName());
+            auctionBidsDto.setStartDate(item.getStartDate());
+            auctionBidsDto.setEndDate(item.getEndDate());
+            auctionBidsDto.setBids((List)item.getBids());
+
+            my_bids.add(auctionBidsDto);
+        });
+
+
+        return my_bids;
+
+    }
+
     
     
     @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
     public List<Category> get_categories(@RequestHeader(value="token")String token) throws Exception {
-    	isUserAdmin(token);
         List<Category> categories = categoryRepository.findAll();
         return categories;
     }
@@ -264,7 +306,7 @@ public class MainCtrl {
 
     @RequestMapping(path = "/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {
-        List<Item> items = itemRepository.findByStartDateIsNotNull();
+        List<Item> items = itemRepository.findActiveItems();
         return convertToItemDTOs(items);
     }
 
@@ -330,18 +372,25 @@ public class MainCtrl {
     }
 
     @RequestMapping(path = "/get_unread/{idReceiver}", method = RequestMethod.GET,  produces = "text/plain")
-    public String getUnread(@PathVariable int idReceiver	) throws Exception {
+    public String getUnread(@PathVariable int idReceiver) throws Exception {
 
 
         String messageCount = messageRepository.getUnreadMessages(idReceiver);
 
         return messageCount;
     }
-    
-    
-    
-    
-    
+
+
+
+    @RequestMapping(path = "/get_bids/{idUser}", method = RequestMethod.GET,  produces = "text/plain")
+    public List<BidDto> getBids(@PathVariable int idUser) throws Exception {
+
+
+        List<Bids> bids = bidRepository.findAll();
+
+        return convertToBidsDTOs(bids);
+    }
+
 
     @RequestMapping(path="/place_bid", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void place_bid(@RequestBody BidDto bidDto) throws Exception {
@@ -359,9 +408,9 @@ public class MainCtrl {
         itemRepository.save(item);
         itemRepository.flush();
 
-        System.out.println("saved");
-
-        bidRepository.save(BidMapper.registerDtoToBid(bidDto));
+        Bids bid = BidMapper.registerDtoToBid(bidDto);
+        bid.setItem(item);
+        bidRepository.save(bid);
         bidRepository.flush();
 
 
@@ -399,9 +448,9 @@ public class MainCtrl {
         }
 
     }
-    
-    
-    
+
+
+
     @RequestMapping(path="/importXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void importXml() throws Exception{
     	try {
@@ -411,30 +460,30 @@ public class MainCtrl {
 
         		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         		ItemsJax itemsJax = (ItemsJax) jaxbUnmarshaller.unmarshal(file);
-        		
-        		
-        		
+
+
+
         		for (ItemJax itemJax: itemsJax.getItem()){
         			//itemJax.get
-        			
-        			
-        			
+
+
+
         		}
-        		
-        		
-        		
+
+
+
         		System.out.println(itemsJax);
 
         	  } catch (JAXBException e) {
         		e.printStackTrace();
         	  }
-    	
+
     }
-    
+
     
     @RequestMapping(path="/exportXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public byte [] exprortXml() throws Exception{
-    	
+
     	  try {
               ItemsJax items = new ItemsJax();
               items.getItem().addAll(itemRepository.findAll().stream().map(ItemMapper::item2ItemJax).collect(Collectors.toList()));
@@ -450,7 +499,7 @@ public class MainCtrl {
           }
           return null;
       }
-    
+
 
 
     @RequestMapping(path = "/update_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")

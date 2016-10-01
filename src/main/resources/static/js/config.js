@@ -42,6 +42,11 @@ app.config(function($routeProvider, $httpProvider){
             controller: 'MessagesController',
             controllerAs: 'controller'
         })
+        .when('/my_auctions',{
+            templateUrl: "/views/my_bids.html",
+            controller: 'MyBidsController',
+            controllerAs: 'controller'
+        })
         .when('/auction/:auctionId?',{
             templateUrl: "/views/view_auction.html",
             controller: 'GetAuctionController',

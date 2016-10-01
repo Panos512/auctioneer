@@ -1,5 +1,7 @@
 package com.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -16,6 +18,18 @@ public class Bids {
     private BigDecimal offerPrice;
 //    private Users usersByUserId;
 //    private Item itemByItemId;
+    private Item item;
+
+    @ManyToOne(optional=false)
+    @JsonIgnore
+    @JoinColumn(name="ItemId", referencedColumnName="ItemId")
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,7 +53,7 @@ public class Bids {
     }
 
     @Basic
-    @Column(name = "ItemId")
+    @Column(name = "ItemId", insertable = false, updatable = false)
     public int getItemId() {
         return itemId;
     }

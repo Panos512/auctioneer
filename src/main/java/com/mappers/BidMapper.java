@@ -16,13 +16,24 @@ public class BidMapper {
 
         Bids bid = new Bids();
 
-        bid.setItemId(bidDto.getItemId());
         bid.setBidDate(bidDto.getBidDate());
         bid.setOfferPrice(bidDto.getOfferPrice());
         bid.setBidId(bidDto.getBidId());
         bid.setUserId(bidDto.getUserId());
 
         return bid;
+    }
+
+    public static BidDto registerBidToDto (Bids bid) {
+
+        BidDto bidDto = new BidDto();
+
+        bidDto.setBidDate(bid.getBidDate());
+        bidDto.setOfferPrice(bid.getOfferPrice());
+        bidDto.setBidId(bid.getBidId());
+        bidDto.setUserId(bid.getUserId());
+
+        return bidDto;
     }
     
     public Bids bidJaxToBid(BidJax bidJax) {

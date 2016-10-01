@@ -28,16 +28,13 @@ public class Item {
     private BigDecimal buyPrice;
     private BigDecimal firstBid;
     private Integer numberOfBids;
-  
-    
-    
  
 	private Users user;
     
     
-	   @ManyToOne(fetch=FetchType.LAZY)
-	    @JoinColumn(name="SellerId")	  
-public Users getUser() {
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="SellerId")
+        public Users getUser() {
 		return user;
 	}
 
@@ -49,6 +46,16 @@ public Users getUser() {
 //    private Users usersBySellerId;
 //    private Collection<ItemCategory> itemCategoriesByItemId;
     private List<Photos> photosesByItemId;
+    private Collection bids;
+
+    @OneToMany(mappedBy="item",targetEntity=Bids.class,fetch=FetchType.EAGER)
+    public Collection getBids() {
+        return bids;
+    }
+
+    public void setBids(Collection bids) {
+        this.bids = bids;
+    }
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
