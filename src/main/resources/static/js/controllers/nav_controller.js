@@ -21,7 +21,11 @@ app.controller('NavController', ['$scope', '$cookies', '$location', 'sharedPrope
 
 
     $scope.logout = function() {
-        console.log('bye');
+        RequestServices.logout()
+            .then(function(response) {
+                console.log('bye');
+            });
+
         sharedProperties.setSuccSignup(false);
         $cookies.remove("auctioneer_user");
         $scope.authenticated = false;

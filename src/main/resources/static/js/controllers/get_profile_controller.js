@@ -8,7 +8,6 @@ app.controller('GetProfileController', ['$scope', '$routeParams', 'RequestServic
     $scope.vote_up = function(){
         RequestServices.vote_up($scope.params.userId)
             .then(function(response) {
-
                 $scope.current_user.sellerRating++;
             });
     };

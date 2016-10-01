@@ -223,10 +223,9 @@ public class MainCtrl {
         return userLogInResponseDto;
     }
 
-    @RequestMapping(path = "/logout", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public void logout(@RequestHeader(value="token")String token){
     	userAuthorizer.removeUserSession(UUID.fromString(token));
-    	System.out.println("fdf");
 
     }
 

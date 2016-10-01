@@ -83,6 +83,14 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.logout = function(){
+        return $http.post('/logout')
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
 
     services.add_auction = function(request){
         console.log(JSON.stringify(request));
