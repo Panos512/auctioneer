@@ -14,7 +14,7 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
         longitude: 6,
         country: 'Greece',
         startDate: null,
-        endDate: new Date(),
+        endDate: null,
         buyPrice: 100,
         sellerId: '',
         categories: [],
@@ -44,18 +44,6 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
             }
         }
         $scope.credentials.categories = $scope.ItemCategories;
-        console.log($scope.credentials.categories);
-
-        $scope.credentials.startDate = new Date($scope.credentials.startDate);
-        $scope.credentials.endDate = new Date($scope.credentials.endDate);
-        var d1 = new Date($scope.credentials.endDate);
-        var d2 = new Date('1/1/1970');
-        if (d1.getTime() === d2.getTime()) {
-            $scope.credentials.endDate = null;
-        }
-        else {
-            $scope.credentials.endDate = new Date($scope.credentials.endDate);
-        }
 
         console.log($scope.credentials);
 

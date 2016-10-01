@@ -6,6 +6,7 @@
         <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
         <li ng-class="{ active: isActive('/auctions')}"><a href="#/auctions">Auctions</a></li>
         <li ng-class="{ active: isActive('/add_auction')}" ng-show="authenticated"><a href="#/add_auction">Add Auction</a>
+        <li ng-class="{ active: isActive('/my_auctions')}" ng-show="authenticated"><a href="#/my_auctions">My Auctions</a>
         <li ng-class="{ active: isActive('/messages')}" ng-show="authenticated">
             <a href="#/messages" ng-hide="unreadMessages">Messages </a>
             <a href="#/messages" ng-show="unreadMessages">Messages ({{unreadMessages}})</a>
