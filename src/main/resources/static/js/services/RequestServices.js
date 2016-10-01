@@ -209,6 +209,25 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             });
     };
 
+    services.vote_up = function(userId){
+        var url = '/vote_up/'.concat(userId);
+        console.log(url);
+        return $http.post(url)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+    };
+
+    services.vote_down = function(userId){
+        var url = '/vote_down/'.concat(userId);
+        console.log(url);
+        return $http.post(url)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+    };
 
     services.get_user = function(userId){
         var url = '/get_user/'.concat(userId);

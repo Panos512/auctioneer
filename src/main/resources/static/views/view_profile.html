@@ -19,9 +19,17 @@
     <dd>{{current_user.address}}</dd>
     <dt>Email:</dt>
     <dd>{{current_user.mail}}</dd>
-    <dt>Buyer Rating:</dt>
-    <dd>{{current_user.buyerRating}}</dd>
-    <dt>Seller Rating:</dt>
-    <dd>{{current_user.sellerrRating}}</dd>
+    <dt>Rating:</dt>
+    <dd>{{current_user.sellerRating}}
+        <button ng-click="vote_up()" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-thumbs-up"></span> Up
+        </button>
+
+        <button ng-click="vote_down()" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-thumbs-down"></span> Down
+        </button>
+    </dd>
+    <!--<dt>Seller Rating:</dt>-->
+    <!--<dd>{{current_user.sellerrRating}}</dd>-->
 
 </dl>
