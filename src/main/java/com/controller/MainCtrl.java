@@ -432,7 +432,7 @@ public class MainCtrl {
     }
     
     
-    @RequestMapping(path="/exprortXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(path="/exportXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public byte [] exprortXml() throws Exception{
     	
     	  try {
