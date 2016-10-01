@@ -8,7 +8,7 @@ app.controller('MyBidsController', ['$scope', 'RequestServices', function($scope
         today.setHours(0,0,0,0);
         date.setHours(0,0,0,0);
 
-        return today <= date;
+        return today <= date || auction.startDate == null;
 
     };
 
