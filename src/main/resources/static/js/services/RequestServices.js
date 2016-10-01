@@ -1,4 +1,23 @@
 'use strict';
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(function($q, $cookies) {
+        return {
+            'request': function(config) {
+
+                var cookie = $cookies.getObject('auctioneer_user');
+
+                if (typeof cookie == 'undefined') {
+                    config.headers['token'] = 'None';
+                }
+                else {
+                    config.headers['token'] = $cookies.getObject('auctioneer_user').token;
+                }
+
+                return config;
+            }
+        };
+    });
+});
 
 app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', function($http, $cookies, sharedProperties) {
     var services = {};
@@ -9,7 +28,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 var obj = {
                     id: response.data.userId,
                     role: response.data.role,
-                    token: 'response.data.token',
+                    token: response.data.generatedToken,
                     verified: response.data.verified
                 };
                 $cookies.putObject('auctioneer_user', obj);
@@ -29,7 +48,7 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 var obj = {
                     id: response.data.userId,
                     role: response.data.role,
-                    token: 'response.data.token'
+                    token: response.data.generatedToken
                 };
                 $cookies.putObject('auctioneer_user', obj);
                 return obj;
