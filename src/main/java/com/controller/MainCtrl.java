@@ -61,7 +61,7 @@ public class MainCtrl {
 
     @Autowired
     private ItemCategoryRepository itemCategoryRepository;
-    
+
     @Autowired
     private MessageRepository messageRepository;
 
@@ -86,14 +86,14 @@ public class MainCtrl {
                 .map(this::convertToItemDTO)
                 .collect(toList());
     }
-    
+
     private MessageDto convertToMessageDTO(Message msg) {
         return MessageMapper.convertMessageEntityToDto(msg);
     }
-    
-    
-    
-    
+
+
+
+
     private List<MessageDto> convertToMessageDTOs(List<Message> items) {
         return items.stream()
                 .map(this::convertToMessageDTO)
@@ -124,8 +124,8 @@ public class MainCtrl {
                 .map(this::convertToPhotoDTO)
                 .collect(toList());
     }
-    
-    
+
+
    private void  isUserAdmin(String token) throws BadRequestException{
         UUID ltoken=UUID.fromString(token);
         Integer userId =userAuthorizer.getUserId(ltoken);
@@ -147,10 +147,10 @@ public class MainCtrl {
 
     @RequestMapping(path = "/get_user_list", method = RequestMethod.GET, produces = "application/json")
     public List<UserDto> get_users_list(@RequestHeader(value="token")String token) throws Exception {
-    	isUserAdmin(token);    		
+    	isUserAdmin(token);
         List<Users> users = userRepository.findAll();
         return convertToUsersDTOs(users);
-		
+
     }
 
 
@@ -176,8 +176,8 @@ public class MainCtrl {
 
     }
 
-    
-    
+
+
     @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
     public List<Category> get_categories(@RequestHeader(value="token")String token) throws Exception {
         List<Category> categories = categoryRepository.findAll();
@@ -222,12 +222,40 @@ public class MainCtrl {
         userAuthorizer.setUserSession(generatedToken, user.getUserId());
         return userLogInResponseDto;
     }
-    
+
     @RequestMapping(path = "/logout", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void logout(@RequestHeader(value="token")String token){
     	userAuthorizer.removeUserSession(UUID.fromString(token));
     	System.out.println("fdf");
-    	
+
+    }
+
+    @RequestMapping(path = "/vote_up/{userId}", method = RequestMethod.POST)
+    public void vote_up(@RequestHeader(value="token")String token, @PathVariable int userId){
+
+        Users user = userRepository.findUserByUserId(userId);
+
+        user.setSellerRating(user.getSellerRating() + 1);
+
+        userRepository.save(user);
+
+        userRepository.flush();
+
+
+    }
+
+    @RequestMapping(path = "/vote_down/{userId}", method = RequestMethod.POST)
+    public void vote_down(@RequestHeader(value="token")String token, @PathVariable int userId){
+
+        Users user = userRepository.findUserByUserId(userId);
+
+        user.setSellerRating(user.getSellerRating() - 1);
+
+        userRepository.save(user);
+
+        userRepository.flush();
+
+
     }
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -480,7 +508,7 @@ public class MainCtrl {
 
     }
 
-    
+
     @RequestMapping(path="/exportXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public byte [] exprortXml() throws Exception{
 
