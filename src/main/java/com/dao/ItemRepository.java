@@ -18,7 +18,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findAll();
     List<Item> findByStartDateIsNotNull();
         
-    @Query("SELECT i FROM Item i WHERE i.startDate < now()")
+    @Query("SELECT i FROM Item i WHERE i.startDate < now() AND now() < i.endDate")
     public List<Item> findActiveItems();
 
     

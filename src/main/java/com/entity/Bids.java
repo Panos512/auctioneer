@@ -1,5 +1,7 @@
 package com.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -19,6 +21,7 @@ public class Bids {
     private Item item;
 
     @ManyToOne(optional=false)
+    @JsonIgnore
     @JoinColumn(name="ItemId", referencedColumnName="ItemId")
     public Item getItem() {
         return item;

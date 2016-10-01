@@ -1,0 +1,28 @@
+<header></header>
+
+<div ng-repeat="auction in credentials" ng-if="notExpired(auction)" class="table-responsive small">
+
+    <table class="table table-hover table-bordered">
+        <caption class="text-left" style="margin-left: 3%;">
+            <a ng-if="!auction.startDate" href="#/edit_auction/{{auction.itemId}}"><strong>{{auction.itemName}}</strong></a>
+            <strong ng-if="auction.startDate">{{auction.itemName}} -- Expires in: <timer end-time="auction.endDate">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+            </strong>
+        </caption>
+        <thead ng-show="auction.bids.length">
+        <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody ng-show="auction.bids.length">
+        <tr ng-repeat="bid in auction.bids">
+            <td>{{bid.userId}}</td>
+            <td>{{bid.bidDate}}</td>
+            <td>{{bid.offerPrice}}</td>
+        </tr>
+        </tbody>
+
+
+    </table>
+</div>

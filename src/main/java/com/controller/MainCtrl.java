@@ -127,12 +127,22 @@ public class MainCtrl {
     
     
    private void  isUserAdmin(String token) throws BadRequestException{
-    	UUID ltoken=UUID.fromString(token);
-    	Integer userId =userAuthorizer.getUserId(ltoken);
-    	Users user= userRepository.findUserByUserId(userId);
-    	if (!user.getRole().equals("admin"))
-    		throw new BadRequestException("User is not admin");
-    	
+        UUID ltoken=UUID.fromString(token);
+        Integer userId =userAuthorizer.getUserId(ltoken);
+        Users user= userRepository.findUserByUserId(userId);
+        if (!user.getRole().equals("admin"))
+            throw new BadRequestException("User is not admin");
+
+    }
+
+    private Users get_user_info(String token) throws BadRequestException{
+        UUID ltoken=UUID.fromString(token);
+        Integer userId =userAuthorizer.getUserId(ltoken);
+        Users user= userRepository.findUserByUserId(userId);
+        if (user == null)
+            throw new BadRequestException("User not found");
+        return user;
+
     }
 
     @RequestMapping(path = "/get_user_list", method = RequestMethod.GET, produces = "application/json")
@@ -144,11 +154,32 @@ public class MainCtrl {
     }
 
 
+    @RequestMapping(path = "/get_my_auctions", method = RequestMethod.GET, produces = "application/json")
+    public List<AuctionBidsDto> get_my_auctions(@RequestHeader(value="token")String token) throws Exception {
+        Users user = get_user_info(token);
+        List<Item> items = user.getItems();
+
+        List<AuctionBidsDto> my_bids = new ArrayList();
+        items.forEach(item -> {
+            AuctionBidsDto auctionBidsDto = new AuctionBidsDto();
+            auctionBidsDto.setItemId(item.getItemId());
+            auctionBidsDto.setItemName(item.getName());
+            auctionBidsDto.setStartDate(item.getStartDate());
+            auctionBidsDto.setEndDate(item.getEndDate());
+            auctionBidsDto.setBids((List)item.getBids());
+
+            my_bids.add(auctionBidsDto);
+        });
+
+
+        return my_bids;
+
+    }
+
     
     
     @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
     public List<Category> get_categories(@RequestHeader(value="token")String token) throws Exception {
-    	isUserAdmin(token);
         List<Category> categories = categoryRepository.findAll();
         return categories;
     }
@@ -275,7 +306,7 @@ public class MainCtrl {
 
     @RequestMapping(path = "/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {
-        List<Item> items = itemRepository.findByStartDateIsNotNull();
+        List<Item> items = itemRepository.findActiveItems();
         return convertToItemDTOs(items);
     }
 
