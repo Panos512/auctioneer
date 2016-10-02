@@ -22,6 +22,7 @@ import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.user.UserAuthorizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -581,10 +582,11 @@ public class MainCtrl {
     }
 
 
-    @RequestMapping(path="/exportXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(path="/exportXml", method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public byte [] exprortXml(@RequestHeader(value="token")String token) throws Exception{
         isUserAdmin(token);
-    	  try {
+        System.out.println("helloz");
+        try {
               ItemsJax items = new ItemsJax();
               items.getItem().addAll(itemRepository.findAll().stream().map(ItemMapper::item2ItemJax).collect(Collectors.toList()));
               JAXBContext jaxbContext = JAXBContext.newInstance(ItemsJax.class);

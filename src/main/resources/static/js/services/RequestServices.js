@@ -84,6 +84,19 @@ app.service("RequestServices", ['$http', '$cookies', '$location', 'sharedPropert
 
     };
 
+    services.export = function(){
+        return $http.post('/exportXml')
+            .then(function (response) {
+                    console.log(response);
+                    return response.data;
+                },
+                function (response){
+                    $location.url('/');
+                });
+
+
+    };
+
     services.get_my_auctions = function(){
         return $http.get('/get_my_auctions')
             .then(function (response) {
