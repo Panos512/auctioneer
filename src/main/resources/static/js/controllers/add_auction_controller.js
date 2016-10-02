@@ -3,6 +3,12 @@
 app.controller('AddAuctionController', ['$scope', '$location', '$cookies', 'RequestServices', function($scope, $location, $cookies, RequestServices) {
     $scope.categories = null;
     $scope.buttonDisabled = false;
+
+    var cookie = $cookies.getObject('auctioneer_user');
+    if (typeof cookie == 'undefined') {
+        $location.path("/");
+    }
+
     $scope.credentials = {
         name:'A new auction',
         description: 'This is a description for the first auction and it needs to be somehow big. So, I will continue typing for some more characters in order to make thi big enough. I think thats enough.. Or maybe not. Ok Bye!',
