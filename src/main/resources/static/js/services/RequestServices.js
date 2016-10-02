@@ -102,6 +102,15 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
 
     };
 
+    services.delete_auction = function(request){
+        return $http.post('/delete_auction', request)
+            .then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+
+    };
+
     services.place_bid = function(request){
         console.log(JSON.stringify(request));
         return $http.post('/place_bid', request)

@@ -331,6 +331,17 @@ public class MainCtrl {
 
     }
 
+
+    @RequestMapping(path = "/delete_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void delete_auction(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+        Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
+
+        itemRepository.delete(item);
+        itemRepository.flush();
+
+        System.out.println("Deleted auction");
+    }
+
     @RequestMapping(path = "/auctions_list", method = RequestMethod.GET, produces = "application/json")
     public List<ItemDto> auctions_list() throws Exception {
         List<Item> items = itemRepository.findActiveItems();
