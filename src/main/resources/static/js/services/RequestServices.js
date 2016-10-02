@@ -5,7 +5,7 @@ app.config(function ($httpProvider) {
             'request': function(config) {
 
                 var cookie = $cookies.getObject('auctioneer_user');
-
+                console.log(cookie);
                 if (typeof cookie == 'undefined') {
                     config.headers['token'] = 'None';
                 }
@@ -19,7 +19,7 @@ app.config(function ($httpProvider) {
     });
 });
 
-app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', function($http, $cookies, sharedProperties) {
+app.service("RequestServices", ['$http', '$cookies', '$location', 'sharedProperties', function($http, $cookies, $location, sharedProperties) {
     var services = {};
 
     services.login = function(request){
@@ -52,6 +52,9 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
                 };
                 $cookies.putObject('auctioneer_user', obj);
                 return obj;
+            },
+                function (response){
+                    $location.url('/');
             });
 
     };
@@ -61,7 +64,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -70,7 +76,11 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
+
 
     };
 
@@ -79,6 +89,9 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
+            },
+            function (response){
+                $location.url('/');
             });
 
     };
@@ -88,7 +101,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -98,7 +114,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -107,7 +126,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -117,7 +139,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -127,7 +152,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -139,7 +167,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
     };
 
 
@@ -148,7 +179,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -159,7 +193,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -170,7 +207,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -180,7 +220,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -190,7 +233,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -201,7 +247,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -213,9 +262,28 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
+
+    services.get_edit_auction = function(auctionId){
+        var url = '/get_edit_auction/'.concat(auctionId);
+
+        return $http.get(url)
+            .then(function (response) {
+                    console.log(response);
+                    return response.data;
+                },
+                function (response){
+                    console.log(response);
+                    $location.url('/');
+                });
+
+    };
+
 
     services.update_auction = function(request){
         console.log('updating');
@@ -233,7 +301,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
     };
 
     services.vote_down = function(userId){
@@ -243,7 +314,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
     };
 
     services.get_user = function(userId){
@@ -253,7 +327,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -267,7 +344,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function (response) {
                 console.log(response);
                 return response.data;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
 
     };
 
@@ -282,7 +362,10 @@ app.service("RequestServices", ['$http', '$cookies', 'sharedProperties', functio
             .then(function(response){
                 console.log(response);
                 return response;
-            });
+            },
+                function (response){
+                    $location.url('/');
+                });
         return response;
 
 

@@ -7,7 +7,10 @@ import com.dto.*;
 
 
 import com.entity.*;
+import com.exceptions.AccessDenied;
 import com.exceptions.BadRequestException;
+import com.exceptions.Unauthorized;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mappers.BidMapper;
 import com.mappers.PhotoMapper;
 import com.mappers.UserMapper;
@@ -126,22 +129,44 @@ public class MainCtrl {
     }
 
 
-   private void  isUserAdmin(String token) throws BadRequestException{
+
+
+
+
+   private void  isUserAdmin(String token) throws AccessDenied{
         UUID ltoken=UUID.fromString(token);
         Integer userId =userAuthorizer.getUserId(ltoken);
         Users user= userRepository.findUserByUserId(userId);
         if (!user.getRole().equals("admin"))
-            throw new BadRequestException("User is not admin");
+            throw new AccessDenied("User is not admin");
 
     }
 
-    private Users get_user_info(String token) throws BadRequestException{
+    private Users get_user_info(String token) throws Unauthorized {
         UUID ltoken=UUID.fromString(token);
         Integer userId =userAuthorizer.getUserId(ltoken);
         Users user= userRepository.findUserByUserId(userId);
         if (user == null)
-            throw new BadRequestException("User not found");
+            throw new Unauthorized("User not found");
         return user;
+
+    }
+
+    private boolean auction_belongs_to_user(String token, int itemId) throws AccessDenied, Unauthorized{
+        UUID ltoken=UUID.fromString(token);
+        Integer userId =userAuthorizer.getUserId(ltoken);
+        Users user= userRepository.findUserByUserId(userId);
+        if (user == null)
+            throw new Unauthorized("User not found");
+
+        List<Item> items = user.getItems();
+        for (Item item : items) {
+            if (item.getItemId() == itemId) {
+                return true;
+            }
+        }
+
+        throw new AccessDenied("Auction does not belong to this user.");
 
     }
 
@@ -179,8 +204,10 @@ public class MainCtrl {
 
 
     @RequestMapping(path = "/get_categories", method = RequestMethod.GET, produces = "application/json")
-    public List<Category> get_categories(@RequestHeader(value="token")String token) throws Exception {
+    public List<Category> get_categories() throws Exception {
+        System.out.println("Hola");
         List<Category> categories = categoryRepository.findAll();
+        System.out.println(categories);
         return categories;
     }
 
@@ -195,8 +222,10 @@ public class MainCtrl {
 
     @RequestMapping(path = "/get_user/{userId}", method = RequestMethod.GET, produces = "application/json")
     public UserDto get_user(@PathVariable int userId,@RequestHeader(value="token")String token) throws Exception {
-    	isUserAdmin(token);
-    	Users user = userRepository.findUserByUserId(userId);
+
+        get_user_info(token);
+
+        Users user = userRepository.findUserByUserId(userId);
 
         return UserMapper.registerUsersToUser(user);
     }
@@ -225,12 +254,14 @@ public class MainCtrl {
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public void logout(@RequestHeader(value="token")String token){
-    	userAuthorizer.removeUserSession(UUID.fromString(token));
+        userAuthorizer.removeUserSession(UUID.fromString(token));
 
     }
 
     @RequestMapping(path = "/vote_up/{userId}", method = RequestMethod.POST)
-    public void vote_up(@RequestHeader(value="token")String token, @PathVariable int userId){
+    public void vote_up(@RequestHeader(value="token")String token, @PathVariable int userId) throws Exception{
+
+        get_user_info(token);
 
         Users user = userRepository.findUserByUserId(userId);
 
@@ -244,7 +275,9 @@ public class MainCtrl {
     }
 
     @RequestMapping(path = "/vote_down/{userId}", method = RequestMethod.POST)
-    public void vote_down(@RequestHeader(value="token")String token, @PathVariable int userId){
+    public void vote_down(@RequestHeader(value="token")String token, @PathVariable int userId) throws Exception{
+
+        get_user_info(token);
 
         Users user = userRepository.findUserByUserId(userId);
 
@@ -282,7 +315,9 @@ public class MainCtrl {
     // ITEMS
     // TODO: MOVE TO NEW FILE
     @RequestMapping(path = "/add_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ItemAddResponseDto register(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+    public ItemAddResponseDto register(@RequestHeader(value="token")String token,@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+
+        get_user_info(token);
 
         Item new_item = ItemMapper.registerRequestToItem(itemAddRequestDto);
         new_item.setUser(userRepository.findUserByUserId(itemAddRequestDto.getSellerId()));
@@ -333,9 +368,11 @@ public class MainCtrl {
 
 
     @RequestMapping(path = "/delete_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void delete_auction(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
-        Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
+    public void delete_auction(@RequestHeader(value="token")String token, @RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
+        auction_belongs_to_user(token, itemAddRequestDto.getItemId());
+
+        Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
         itemRepository.delete(item);
         itemRepository.flush();
 
@@ -359,22 +396,39 @@ public class MainCtrl {
 
 
     @RequestMapping(path="/get_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
-    public ItemDto get_auction(@PathVariable int itemId) throws Exception {
+    public ItemDto get_auction(@RequestHeader(value="token")String token, @PathVariable int itemId) throws Exception {
+        Item item = itemRepository.findItemByItemId(itemId);
+
+        return ItemMapper.registerItemToItem(item);
+    }
+
+    @RequestMapping(path="/get_edit_auction/{itemId}", method = RequestMethod.GET, produces = "application/json")
+    public ItemDto get_edit_auction(@RequestHeader(value="token")String token, @PathVariable int itemId) throws Exception {
+
+        auction_belongs_to_user(token, itemId);
+
         Item item = itemRepository.findItemByItemId(itemId);
 
         return ItemMapper.registerItemToItem(item);
     }
 
 
+
     @RequestMapping(path = "/send_message", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void sentMessage(@RequestBody MessageDto pMessage) throws Exception {
+    public void sentMessage(@RequestHeader(value="token")String token,@RequestBody MessageDto pMessage) throws Exception {
+
+        get_user_info(token);
+
         Message newMessage=MessageMapper.convertMessageDtoToEnitry(pMessage);
         messageRepository.save(newMessage);
         messageRepository.flush();
     }
 
     @RequestMapping(path = "/delete_message", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void delete_message(@RequestBody MessageDto pMessage) throws Exception {
+    public void delete_message(@RequestHeader(value="token")String token, @RequestBody MessageDto pMessage) throws Exception {
+
+        get_user_info(token);
+
         Message message = MessageMapper.convertMessageDtoToEnitry(pMessage);
 
         messageRepository.delete(message);
@@ -421,8 +475,8 @@ public class MainCtrl {
 
 
     @RequestMapping(path = "/get_bids/{idUser}", method = RequestMethod.GET,  produces = "text/plain")
-    public List<BidDto> getBids(@PathVariable int idUser) throws Exception {
-
+    public List<BidDto> getBids(@RequestHeader(value="token")String token,@PathVariable int idUser) throws Exception {
+        get_user_info(token);
 
         List<Bids> bids = bidRepository.findAll();
 
@@ -431,9 +485,11 @@ public class MainCtrl {
 
 
     @RequestMapping(path="/place_bid", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void place_bid(@RequestBody BidDto bidDto) throws Exception {
+    public void place_bid(@RequestHeader(value="token")String token,@RequestBody BidDto bidDto) throws Exception {
 
         System.out.println(bidDto);
+
+        get_user_info(token);
 
         Item item = itemRepository.findItemByItemId(bidDto.getItemId());
 
@@ -520,8 +576,8 @@ public class MainCtrl {
 
 
     @RequestMapping(path="/exportXml", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public byte [] exprortXml() throws Exception{
-
+    public byte [] exprortXml(@RequestHeader(value="token")String token) throws Exception{
+        isUserAdmin(token);
     	  try {
               ItemsJax items = new ItemsJax();
               items.getItem().addAll(itemRepository.findAll().stream().map(ItemMapper::item2ItemJax).collect(Collectors.toList()));
@@ -541,7 +597,8 @@ public class MainCtrl {
 
 
     @RequestMapping(path = "/update_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ItemAddResponseDto updateAuction(@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+    public ItemAddResponseDto updateAuction(@RequestHeader(value="token")String token, @RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
+        auction_belongs_to_user(token, itemAddRequestDto.getItemId());
 
         System.out.println(itemAddRequestDto);
         Item item = ItemMapper.registerRequestToItem(itemAddRequestDto);
@@ -587,6 +644,16 @@ public class MainCtrl {
 
         return itemAddResponseDto; // TODO: Return something meaningful.
 
+    }
+
+    @ExceptionHandler(AccessDenied.class)
+    public void accessDenied(HttpServletResponse e) throws Exception {
+        e.sendError(HttpStatus.FORBIDDEN.value());
+    }
+
+    @ExceptionHandler(Unauthorized.class)
+    public void unathorized_access(HttpServletResponse e) throws Exception {
+        e.sendError(HttpStatus.NON_AUTHORITATIVE_INFORMATION.value());
     }
 
 
