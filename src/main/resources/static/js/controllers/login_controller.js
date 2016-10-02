@@ -3,7 +3,7 @@
 app.controller('UserController', ['$scope', '$location', 'RequestServices', 'sharedProperties', function($scope, $location, RequestServices, sharedProperties) {
 
     $scope.credentials = {
-        username: '', // TODO: And email.
+        username: '',
         password: ''
     };
 

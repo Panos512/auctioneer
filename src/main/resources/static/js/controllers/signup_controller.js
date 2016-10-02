@@ -3,7 +3,7 @@
 
 app.controller('SignUpController', ['$scope', '$location','RequestServices' , 'sharedProperties', function($scope, $location, RequestServices, sharedProperties) {
 
-    $scope.credentials = {           // TODO: do we need this?
+    $scope.credentials = {
         username: '',
         password: '',
         rep_password: '',

@@ -70,14 +70,4 @@ app.controller('AuctionsController', ['$scope', 'RequestServices', function($sco
         return true;
     };
 
-
-    //    TODO: Use this query to make a filter in range of coordinates (10km -> "<= 10000").
-    //    SELECT * FROM Places WHERE acos(sin(1.3963) * sin(Lat) + cos(1.3963) * cos(Lat) * cos(Lon - (-0.6981))) * 6371 <= 10000;
-    // $scope.mapFilter = function (data) {
-    //     console.log(data, $scope.mapInput.latitude, $scope.mapInput.lontitude)
-    //     if (Math.acos(Math.sin(1.3963) * Math.sin(Lat) + Math.cos(1.3963) * Math.cos(Lat) * Math.cos(Lon - (-0.6981))) * 6371 <= 10000){
-    //         return true;
-    //     }
-    //     return false;
-    // };
 }]);

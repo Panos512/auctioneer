@@ -235,8 +235,15 @@ public class MainCtrl {
     public UserLogInResponseDto login(@RequestBody UserLoginRequestDto userLogInRequestDto) throws Exception {
         //search for user
       Users user = userRepository.findUserByUsernameAndPassword(userLogInRequestDto.getUsername(), userLogInRequestDto.getPassword());
-        if (user == null)
-            throw new BadRequestException("User not found");
+        if (user == null) {
+            Users mail_user = userRepository.findUserByEmailAndPassword(userLogInRequestDto.getUsername(), userLogInRequestDto.getPassword());
+            user = mail_user;
+            if (mail_user == null)
+                throw new BadRequestException("User not found");
+        }
+
+
+
         //generate session token
         UUID generatedToken = UUID.randomUUID();
 
@@ -307,13 +314,12 @@ public class MainCtrl {
         UserSignUpResponseDto userSignUpResponseDto = new UserSignUpResponseDto();
         userSignUpResponseDto.setUserId(i);
 
-        return userSignUpResponseDto; // TODO: Return something meaningful.
+        return userSignUpResponseDto;
 
     }
 
 
     // ITEMS
-    // TODO: MOVE TO NEW FILE
     @RequestMapping(path = "/add_auction", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ItemAddResponseDto register(@RequestHeader(value="token")String token,@RequestBody ItemAddRequestDto itemAddRequestDto) throws Exception {
 
@@ -362,7 +368,7 @@ public class MainCtrl {
         ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
         itemAddResponseDto.setItemId(new_item.getItemId());
 
-        return itemAddResponseDto; // TODO: Return something meaningful.
+        return itemAddResponseDto;
 
     }
 
@@ -642,7 +648,7 @@ public class MainCtrl {
         ItemAddResponseDto itemAddResponseDto = new ItemAddResponseDto();
         itemAddResponseDto.setItemId(item.getItemId());
 
-        return itemAddResponseDto; // TODO: Return something meaningful.
+        return itemAddResponseDto;
 
     }
 
