@@ -24,7 +24,7 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
     var auctionId = $scope.params.auctionId;
 
     RequestServices.get_auction(auctionId).then( function (response){
-
+        $scope.originalAuction = response;
         // TODO: User should be able to delete photos.
         // response.photos = response.images;
         response.photos = [];
@@ -48,6 +48,15 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
         console.log($scope.credentials);
 
     });
+
+    $scope.delete_auction = function(auction){
+        if (confirm('Are you sure you want to delete this auction?')) {
+            RequestServices.delete_auction(auction)
+                .then(function (response) {
+                    $location.path("/");
+                });
+        };
+    };
 
 
     $scope.selectedCategories = [];

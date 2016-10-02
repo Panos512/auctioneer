@@ -1,6 +1,6 @@
 <header></header>
 
-<div ng-repeat="auction in credentials" ng-if="notExpired(auction)" class="table-responsive small">
+<div ng-repeat="auction in credentials" ng-if="isVisible(auction)" class="table-responsive small">
 
     <table class="table table-hover table-bordered">
         <caption class="text-left" style="margin-left: 3%;">
