@@ -1,7 +1,7 @@
 'use strict';
 
 app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$routeParams', 'RequestServices', function($scope, $location, $cookies, $routeParams, RequestServices) {
-    // $scope.categories = [];
+
     $scope.categories = [];
 
     $scope.buttonDisabled = false;
@@ -23,7 +23,7 @@ app.controller('EditAuctionController', ['$scope', '$location', '$cookies', '$ro
     $scope.params = $routeParams;
     var auctionId = $scope.params.auctionId;
 
-    RequestServices.get_auction(auctionId).then( function (response){
+    RequestServices.get_edit_auction(auctionId).then( function (response){
         $scope.originalAuction = response;
         // TODO: User should be able to delete photos.
         // response.photos = response.images;

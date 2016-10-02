@@ -57,6 +57,11 @@ app.config(function($routeProvider, $httpProvider){
             controller: 'GetProfileController',
             controllerAs: 'controller'
         })
+        .when('/404',{
+            templateUrl: "/views/404.html",
+            controller: 'HomeController',
+            controllerAs: 'controller'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

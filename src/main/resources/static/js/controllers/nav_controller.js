@@ -24,13 +24,15 @@ app.controller('NavController', ['$scope', '$cookies', '$location', 'sharedPrope
         RequestServices.logout()
             .then(function(response) {
                 console.log('bye');
+
+                sharedProperties.setSuccSignup(false);
+                $cookies.remove("auctioneer_user");
+                $scope.authenticated = false;
+                $location.path('/');
+                return true;
             });
 
-        sharedProperties.setSuccSignup(false);
-        $cookies.remove("auctioneer_user");
-        $scope.authenticated = false;
-        $location.path('/');
-        return true;
+
     };
 
 
