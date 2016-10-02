@@ -109,19 +109,20 @@ CREATE TABLE `Messages` (
 
 
 INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
-  (1, 'Paparigopoulos', 'Lemonemboras', '123456', 'cocoblocos', 'jimseinta@gmail.com', 'praxitelous', 46.2463691, 6.0247886, '23242343423', '6987122499', 'admin', 'male', TRUE, 0.0, 0.0);
+  (1, 'Paparigopoulos', 'Panos', '123456', 'admin1', 'jimseinta@gmail.com', 'dromos', 46.2463691, 6.0247886, '23242343423', '6936936933', 'admin', 'male', TRUE, 0.0, 0.0);
   
 INSERT INTO `Users` (`UserID`, `LastName`, `FirstName`, `Password`, `Username`, `Email`, `Address`, `Latitude`, `Longitude`, `Afm`, `Phone`, `Role`, `Gender`, `Verified`, `BuyerRating`, `SellerRating`) VALUES
-(2, 'Seintaridis', 'Tzitzifiogos', '234567', 'kokoblokos', 'alo@gmail.com', 'praxitelous', 46.2463691, 6.0247886, '123131231', '6987122399', 'admin', 'male', TRUE, 0.0, 0.0);
+(2, 'Seintaridis', 'Dimitris', '123456', 'admin2', 'alo@gmail.com', 'dromos', 46.2463691, 6.0247886, '123131231', '6936936933', 'admin', 'male', TRUE, 0.0, 0.0);
 
 INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,  `Number_Of_Bids`,  `Latitude`,  `Longitude`,  `Country`,  `CreatedDate`,  `StartDate`,  `EndDate`,  `Description`,  `SellerId`) VALUES
-                    (1, "Playstation 4", 150, 200, 100, 3, 42.1, 6.1, "Greece", STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('15-08-2016', '%d-%m-%Y'), "Playstation 4 in great condition, bought on 2016. Comes with 4 games and 2 controllers. Also available 3rd remote." , 1);
+                    (1, "Playstation 4", 150, 200, 100, 3, 37.9685288, 23.7648034, "Greece", STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('1-08-2016', '%d-%m-%Y'), STR_TO_DATE('15-08-2016', '%d-%m-%Y'), "Playstation 4 in great condition, bought on 2016. Comes with 4 games and 2 controllers. Also available 3rd remote." , 1);
 INSERT INTO `Item` (`ItemId`,  `Name`,  `Currently`,  `Buy_Price`,  `First_Bid`,  `Number_Of_Bids`,  `Latitude`,  `Longitude`,  `Country`,  `CreatedDate`,  `StartDate`,  `EndDate`,  `Description`,  `SellerId`)  VALUES
-                    (2, "MacBook Pro 13inch late 2015", 850, 950, 800, 1, 42.1, 6.2, "Greece",  STR_TO_DATE('1-08-2016', '%d-%m-%Y'), null, STR_TO_DATE('16-09-2016', '%d-%m-%Y'), "MacBook Pro in exceland condition. 4gb of ram 128gb ssd and i5 processor. Comes with charger and 2 thunderbolt to dvi adaptors." , 1);
+                    (2, "MacBook Pro 13inch late 2015", 850, 950, 800, 1, 37.9685288, 23.7648034, "Greece",  STR_TO_DATE('1-08-2016', '%d-%m-%Y'), null, STR_TO_DATE('16-09-2016', '%d-%m-%Y'), "MacBook Pro in exceland condition. 4gb of ram 128gb ssd and i5 processor. Comes with charger and 2 thunderbolt to dvi adaptors." , 1);
 
 INSERT INTO `Category` VALUES (1, "Video Games");
 INSERT INTO `Category` VALUES (2, "Laptops");
-INSERT INTO `Category` VALUES (3, "Others");
+INSERT INTO `Category` VALUES (3, "Electronics");
+INSERT INTO `Category` VALUES (4, "Others");
 
 
 INSERT INTO  `ItemCategory` VALUES (1, 1, 1);
